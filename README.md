@@ -1,1 +1,3 @@
-# DungeonGrams-TS
+# DungeonGrams
+
+With a TypeScript implementation.
