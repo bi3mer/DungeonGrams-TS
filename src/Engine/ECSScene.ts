@@ -9,7 +9,9 @@ export abstract class ECSScene extends Scene {
 
   // Main state
   private entities = new Map<Entity, ComponentContainer>()
-  private systems = new Map<System, Set<Entity>>()
+  private priorityToSystem = new Map<number, System>()
+  private priorityToComponents = new Map<number, Set<Entity>>();
+  private priorities = new Array<number>();
 
   // Bookkeeping for entities.
   private nextEntityID = 0
@@ -75,44 +77,44 @@ export abstract class ECSScene extends Scene {
   }
 
   // API: Systems
-
-  public addSystem(system: System): void {
-    // Checking invariant: systems should not have an empty
-    // Components list, or they'll run on every entity. Simply remove
-    // or special case this check if you do want a System that runs
-    // on everything.
+  /**
+   * Add a system where the priority defines in what order it will be run when
+   * compared to other systems
+   * @param priority - lower value is run first
+   * @param system 
+   */
+  public addSystem(priority: number, system: System): void {
+    // System must require at least one component    
     if (system.componentsRequired.size == 0) {
-      console.warn('System not added: empty Components list.');
-      console.warn(system);
+      console.error('System not added: empty Components list.' + system);
+      return;
+    }
+
+    if(this.priorities.includes(priority)) {
+      console.error(`${system} can not be used since priority ${priority} already in use.`);
       return;
     }
 
     // Give system a reference to the ECS so it can actually do
     // anything.
     system.ecs = this;
+    
+    this.priorityToSystem.set(priority, system);
+    this.priorityToComponents.set(priority, new Set());
+    this.priorities.push(priority);
+    this.priorities.sort();
 
     // Save system and set who it should track immediately.
-    this.systems.set(system, new Set());
     for (let entity of this.entities.keys()) {
       this.checkES(entity, system);
     }
   }
 
-  /**
-   * Note: I never actually had a removeSystem() method for the entire
-   * time I was programming the game Fallgate (2 years!). I just added
-   * one here for a specific testing reason (see the next post).
-   * Because it's just for demo purposes, this requires an actual
-   * instance of a System to remove (which would be clunky as a real
-   * API).
-   */
-  public removeSystem(system: System): void {
-    this.systems.delete(system);
-  }
-
   protected clear(): void {
     this.entities.clear();
-    this.systems.clear();
+    this.priorityToComponents.clear();
+    this.priorityToSystem.clear();
+    this.priorities.length = 0;
   }
 
   private destroyEntity(entity: Entity): void {

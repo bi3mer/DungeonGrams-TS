@@ -1,19 +1,24 @@
-import { StartMenuScene } from "./Scenes/StartMenuScene";
-import { MazeGameScene } from "./Scenes/MazeGameScene";
 import { Game } from "./Engine/Game";
-import { GameOverScene } from "./Scenes/GameOverScene";
+import { GameScene } from "./Scenes/GameScene";
+import { PlayerLostScene } from "./Scenes/PlayerLostScene";
+import { PlayerWonScene } from "./Scenes/PlayerWonScene";
+import { SelectionScene } from "./Scenes/SelectionScene";
 
 const game = new Game();
-const menuScene = new StartMenuScene();
-const gameScene = new MazeGameScene()
-const gameOverScene = new GameOverScene();
+const selectionScene = new SelectionScene();
+const gameScene = new GameScene();
+const playerLostScene = new PlayerLostScene();
+const playerWonScene = new PlayerWonScene();
 
-const mainMenuIndex = game.addScene(menuScene);
+const selectionIndex = game.addScene(selectionScene);
 const gameIndex = game.addScene(gameScene);
-const gameOverIndex = game.addScene(gameOverScene);
+const lostIndex = game.addScene(playerLostScene);
+const wonIndex = game.addScene(playerWonScene);
 
-menuScene.sceneIndex = gameIndex;
-gameScene.sceneIndex = gameOverIndex;
-gameOverScene.sceneIndex = mainMenuIndex;
+selectionScene.sceneIndex = gameIndex;
+gameScene.scenePlayerLostIndex = lostIndex;
+gameScene.scenePlayerWonIndex = wonIndex;
+playerLostScene.sceneIndex = selectionIndex;
+playerWonScene.sceneIndex = selectionIndex;
 
 game.start();

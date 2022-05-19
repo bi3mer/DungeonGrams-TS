@@ -2,7 +2,7 @@ import { Game } from "../Engine/Game";
 import { Key } from "../Engine/Key";
 import { Scene } from "../Engine/Scene";
 
-export class StartMenuScene extends Scene {
+export class SelectionScene extends Scene {
   public sceneIndex: number = 0;
 
   constructor() {

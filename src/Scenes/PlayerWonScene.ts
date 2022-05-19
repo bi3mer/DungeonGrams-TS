@@ -1,7 +1,7 @@
 import { Game } from "../Engine/Game";
 import { Scene } from "../Engine/Scene";
 
-export class GameOverScene extends Scene {
+export class PlayerWonScene extends Scene {
   public sceneIndex: number = 0;
   public timer: number = 0;
 
