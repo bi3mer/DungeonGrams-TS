@@ -1,35 +1,47 @@
 import { Game } from "../Engine/Game";
-import { Key } from "../Engine/Key";
 import { ECSScene } from "../Engine/ECSScene";
 import { LEVELS } from "../levels"; 
+import { MenuText } from "../Components/SelectionScene/MenuText";
+import { UpdateSelected } from "../Systems/SelectionScene/UpdateSelected";
+import { RenderMenuTextSystem } from "../Systems/SelectionScene/RenderMenuText";
+import { Key } from "../Engine/Key";
 
 export class SelectionScene extends ECSScene {
   public sceneIndex: number = 0;
+  private sortedLevels: Array<string>;
   
   constructor() {
     super();
+    
+    this.sortedLevels = [];
+    for(let key in LEVELS) {
+      this.sortedLevels.push(key);
+    }
+    
+    this.sortedLevels.sort();
   }
   
-  public onExit(): void { }
-  
-  public onEnter(): void {
-    for(let key in LEVELS) {
-      
+  public onEnter(): void { 
+    for(let i = 0; i < this.sortedLevels.length; ++i) {
+      const id = this.addEntity();
+      const selected = i == 0;
+      this.addComponent(id, new MenuText(this.sortedLevels[i], i, selected));
     }
+    
+    this.addSystem(0, new UpdateSelected());
+    this.addSystem(10, new RenderMenuTextSystem());
+  }
+  
+  public onExit(): void { 
+    this.clear();
   }
   
   public customUpdate(game: Game): number {
+    if (game.keyDown.has(Key.ENTER)) {
+      console.warn('How am I going to pass the level info to the next scene?');
+      return this.sceneIndex;
+    }
+
     return -1;
   }
-  
-  // public update(game: Game): number {
-  //   if (game.keyDown.has(Key.SPACE)) {
-  //     return this.sceneIndex;
-  //   } else {
-  //     game.ctx.font = '40px Arial';
-  //     game.ctx.fillStyle = 'white'
-  //     game.ctx.fillText('Press Space to Play', game.width/3.5, game.height/2);
-  //     return -1;
-  //   }
-  // }
 }

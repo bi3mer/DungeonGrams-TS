@@ -45,6 +45,8 @@ export class Game {
     let oldTimeStamp : number;
     let fps : number;
 
+    this.scenes[this.sceneIndex].onEnter();
+
     const gameLoop = (timeStamp : number) => {
       // Calculate the number of seconds passed since the last frame
       this.delta = (timeStamp - oldTimeStamp) / 1000;

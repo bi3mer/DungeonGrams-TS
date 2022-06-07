@@ -16,8 +16,10 @@ const lostIndex = game.addScene(playerLostScene);
 const wonIndex = game.addScene(playerWonScene);
 
 selectionScene.sceneIndex = gameIndex;
+
 gameScene.scenePlayerLostIndex = lostIndex;
 gameScene.scenePlayerWonIndex = wonIndex;
+
 playerLostScene.sceneIndex = selectionIndex;
 playerWonScene.sceneIndex = selectionIndex;
 
