@@ -1,0 +1,11 @@
+@-XX--XXX--XXX-----
+--XX--XXX--XXX-----
+--XX--XXX--XXX-----
+--XX--XXX--XXX-----
+--XX--XXX--XXX-----
+--XXXXXXXXXXXXXX---
+--XXXXXXXXXXXXXX---
+--XXXXXXXXXXXXXX---
+--*XXXXXXXXXXXXX---
+-------------------
+--#----&----&-----O
