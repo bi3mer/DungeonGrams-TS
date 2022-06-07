@@ -7,33 +7,43 @@ export class RenderMenuTextSystem extends System {
   componentsRequired = new Set<Function>([MenuText]);
 
   update(game: Game, entities: Set<Entity>): void {
+    const minY = 100;
+    const maxY = game.height - 40;
+    const yMod = 20;
+    const maxOrder = (maxY - minY) / yMod;
+
+
+    game.ctx.font="15px Arial";
     for(let entity of entities.values()) {
-        const m = this.ecs.getComponents(entity).get(MenuText);
+      const m = this.ecs.getComponents(entity).get(MenuText);
+      let x = 20;
+      let o = m.order;
+
+      while (o > maxOrder) {
+        o -= maxOrder + 1;
+        x += 60;
+      }
+
+      let y = minY + yMod * o;
+      
+      if(m.selected) {
+        const txtMeasure = game.ctx.measureText(m.name);
+        game.ctx.fillStyle = 'white'
+        game.ctx.fillRect(
+          x-1.0, 
+          y - yMod*0.7,
+          txtMeasure.width*1.1, 
+          yMod);
+
+        game.ctx.fillStyle = 'black'
+        game.ctx.fillText(m.name, x, y);
+      } else {
+        game.ctx.fillStyle = 'white'
+        game.ctx.fillText(m.name, x, y);
+      }
     }
 
-    // const xMod = game.width/20;
-    // const yMod = game.height/20;
-
-    // for(let entity of entities.values()) {
-    //   const render = this.ecs.getComponents(entity).get(Render)
-    //   const pos = this.ecs.getComponents(entity).get(Position);
-    //   game.ctx.fillStyle = render.color;
-    //   game.ctx.fillRect(
-    //     pos.x*xMod + xMod*render.offset, 
-    //     pos.y*yMod + yMod*render.offset, 
-    //     xMod*render.size, 
-    //     yMod*render.size);
-    // }
-
-      // public update(game: Game): number {
-      //   if (game.keyDown.has(Key.SPACE)) {
-      //     return this.sceneIndex;
-      //   } else {
-      //     game.ctx.font = '40px Arial';
-      //     game.ctx.fillStyle = 'white'
-      //     game.ctx.fillText('Press Space to Play', game.width/3.5, game.height/2);
-      //     return -1;
-      //   }
-      // }
+    game.ctx.font="30px Arial";
+    game.ctx.fillText('Level Select', game.width/2.5, 35);
   }
 }
