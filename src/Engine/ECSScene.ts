@@ -5,6 +5,8 @@ import { Component, ComponentContainer } from "./Component";
 import { Entity } from "./Entity";
 import { System } from "./System";
 
+// https://maxwellforbes.com/posts/typescript-ecs-implementation/ is what this
+// implementation is based off of.
 export abstract class ECSScene extends Scene {
 
   // Main state
@@ -28,8 +30,10 @@ export abstract class ECSScene extends Scene {
   public update(game: Game): number {
     // Update all systems. (Later, we'll add a way to specify the
     // update order.)
-    for (let [system, entities] of this.systems.entries()) {
-      system.update(game, entities)
+    for (let priority of this.priorities) {
+      const system = this.priorityToSystem.get(priority)!;
+      const components = this.priorityToComponents.get(priority)!;
+      system.update(game, components);
     }
 
     // Remove any entities that were marked for deletion during the
@@ -40,7 +44,6 @@ export abstract class ECSScene extends Scene {
 
     return this.customUpdate(game);
   }
-
   
 
   // API: Entities
@@ -106,7 +109,7 @@ export abstract class ECSScene extends Scene {
 
     // Save system and set who it should track immediately.
     for (let entity of this.entities.keys()) {
-      this.checkES(entity, system);
+      this.checkES(entity, priority);
     }
   }
 
@@ -119,15 +122,15 @@ export abstract class ECSScene extends Scene {
 
   private destroyEntity(entity: Entity): void {
     this.entities.delete(entity);
-    for (let entities of this.systems.values()) {
-      entities.delete(entity);  // no-op if doesn't have it
+    for(let priority of this.priorities) {
+      this.priorityToComponents.get(priority)?.delete(entity);
     }
   }
 
   // @TODO: can I remove this?
   private checkE(entity: Entity): void {
-    for (let system of this.systems.keys()) {
-      this.checkES(entity, system);
+    for(let priority of this.priorities) {
+      this.checkES(entity, priority);
     }
   }
 
@@ -136,15 +139,16 @@ export abstract class ECSScene extends Scene {
    * @param entity 
    * @param system 
    */
-  private checkES(entity: Entity, system: System): void {
+  private checkES(entity: Entity, priority: number): void {
     let have = this.entities.get(entity);
-    let need = system.componentsRequired;
+    let need = this.priorityToSystem.get(priority)!.componentsRequired;
+
     if (have!.hasAll(need)) {
       // should be in system
-      this.systems.get(system)!.add(entity); // no-op if in
+      this.priorityToComponents.get(priority)!.add(entity);
     } else {
       // should not be in system
-      this.systems.get(system)!.delete(entity); // no-op if out
+      this.priorityToComponents.get(priority)!.delete(entity);
     }
   }
 };
