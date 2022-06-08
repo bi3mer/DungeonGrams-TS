@@ -10,9 +10,9 @@ export class StartScene extends Scene {
     super();
   }
 
-  public onEnter(): void { }
+  public onEnter(game: Game): void { }
   
-  public onExit(): void { }
+  public onExit(game: Game): void { }
 
   public update(game: Game): number {
     if(game.keyDown.has(Key.ENTER)) {

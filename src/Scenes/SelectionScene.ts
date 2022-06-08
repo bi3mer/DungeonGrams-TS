@@ -21,7 +21,7 @@ export class SelectionScene extends ECSScene {
     this.sortedLevels.sort();
   }
   
-  public onEnter(): void { 
+  public onEnter(game: Game): void { 
     for(let i = 0; i < this.sortedLevels.length; ++i) {
       const id = this.addEntity();
       const selected = i == 0;
@@ -34,7 +34,7 @@ export class SelectionScene extends ECSScene {
     this.addSystem(10, new RenderMenuTextSystem());
   }
   
-  public onExit(): void { 
+  public onExit(game: Game): void { 
     this.clear();
   }
   

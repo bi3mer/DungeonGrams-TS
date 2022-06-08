@@ -8,7 +8,7 @@ export abstract class Scene {
    * @param keyPresses 
    */
   public abstract update(game: Game): number;
-
-  public abstract onEnter(): void;
-  public abstract onExit(): void;
+  
+  public abstract onEnter(game: Game): void;
+  public abstract onExit(game: Game): void;
 };

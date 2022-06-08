@@ -9,11 +9,11 @@ export class PlayerLostScene extends Scene {
     super();
   }
 
-  public onEnter(): void { 
+  public onEnter(game: Game): void { 
     this.timer = 0;
   }
   
-  public onExit(): void { }
+  public onExit(game: Game): void { }
 
   public update(game: Game): number {
     this.timer += game.delta

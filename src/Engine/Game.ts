@@ -49,7 +49,7 @@ export class Game {
     let oldTimeStamp : number;
     let fps : number;
 
-    this.scenes[this.sceneIndex].onEnter();
+    this.scenes[this.sceneIndex].onEnter(this);
 
     const gameLoop = (timeStamp : number) => {
       // Calculate the number of seconds passed since the last frame
@@ -78,9 +78,9 @@ export class Game {
   private update(): void {
     const i = this.scenes[this.sceneIndex].update(this);
     if (i !== -1) {
-      this.scenes[this.sceneIndex].onExit();
+      this.scenes[this.sceneIndex].onExit(this);
       this.sceneIndex = i
-      this.scenes[this.sceneIndex].onEnter();
+      this.scenes[this.sceneIndex].onEnter(this);
     }
 
     this.keyPress.clear();

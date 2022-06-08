@@ -3,6 +3,8 @@ import { Game } from "../Engine/Game";
 import { Position } from "../Components/Position";
 import { Render } from "../Components/Render";
 import { Player } from "../Components/Player";
+import { LEVELS } from "../levels";
+import { RenderSystem } from "../Systems/RenderSystem";
 
 export class GameScene extends ECSScene {
   public scenePlayerWonIndex: number = 0;
@@ -14,26 +16,30 @@ export class GameScene extends ECSScene {
     super();
   }
 
-  public onEnter(): void {
-    this.playerID = this.addEntity();
-    this.addComponent(this.playerID, new Position(0,0));
-    this.addComponent(this.playerID, new Render('white', '@'));
-    this.addComponent(this.playerID, new Player());
+  public onEnter(game: Game): void {
+    const lvlKey = game.blackBoard.get('level') as string;
+    const lvl = LEVELS[lvlKey as keyof typeof LEVELS];
+    for (let y = 0; y < lvl.length; ++y) {
+      for (let x = 0; x < lvl[y].length; ++x) {
+        const char = lvl[y][x];
+        const id = this.addEntity();
+        this.addComponent(id, new Render('white', char));
+        this.addComponent(id, new Position(x, y));
+      }
+    }
 
-    // this.addSystem(new PlayerSystem(this.size));
-    // this.addSystem(new PlayerColliderSystem(this.playerID));
-    // this.addSystem(new RenderSystem());
+    this.addSystem(100, new RenderSystem());
   }
   
-  public onExit(): void {
+  public onExit(game: Game): void {
     this.clear();
   }
 
   public customUpdate(game: Game): number {
-    const playerPos = this.getComponents(this.playerID).get(Position);
-    if (playerPos.x == this.size - 1 && playerPos.y == this.size - 1) {
-      return -1;
-    }
+    // const playerPos = this.getComponents(this.playerID).get(Position);
+    // if (playerPos.x == this.size - 1 && playerPos.y == this.size - 1) {
+    //   return -1;
+    // }
     return -1;
   }
 }
