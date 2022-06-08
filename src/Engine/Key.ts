@@ -17,7 +17,7 @@ export function keyCodeToKey(key: string): Key {
   switch(key) {
     case 'Down': 
     case 'ArrowDown': 
-      return Key.LEFT;
+      return Key.DOWN;
     case 'Up': 
     case 'ArrowUp': 
       return Key.UP;

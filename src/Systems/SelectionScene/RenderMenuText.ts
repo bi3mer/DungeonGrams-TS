@@ -12,7 +12,6 @@ export class RenderMenuTextSystem extends System {
     const yMod = 20;
     const maxOrder = (maxY - minY) / yMod;
 
-
     game.ctx.font="15px Arial";
     for(let entity of entities.values()) {
       const m = this.ecs.getComponents(entity).get(MenuText);
@@ -44,6 +43,7 @@ export class RenderMenuTextSystem extends System {
     }
 
     game.ctx.font="30px Arial";
-    game.ctx.fillText('Level Select', game.width/2.5, 35);
+    game.ctx.fillStyle = 'white'
+    game.ctx.fillText('Level Select', game.width/2.5, 45);
   }
 }

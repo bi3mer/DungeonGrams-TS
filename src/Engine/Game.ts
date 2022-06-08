@@ -14,6 +14,9 @@ export class Game {
   constructor() {
     window.addEventListener('keydown', (e: KeyboardEvent) => {
       const k = keyCodeToKey(e.key);
+      if(k == Key.DOWN || k == Key.UP || k == Key.LEFT || k == Key.RIGHT) {
+        e.preventDefault();
+      }
       if(!this.keyDown.has(k)) {
         this.keyDown.add(k)
       }
