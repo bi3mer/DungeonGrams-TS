@@ -10,6 +10,7 @@ export class Game {
   public readonly width: number;
   public readonly height: number;
   public delta: number;
+  public blackBoard: Map<string, any> = new Map<string, any>();
 
   constructor() {
     window.addEventListener('keydown', (e: KeyboardEvent) => {

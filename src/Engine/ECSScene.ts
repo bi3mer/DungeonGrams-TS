@@ -14,6 +14,7 @@ export abstract class ECSScene extends Scene {
   private priorityToSystem = new Map<number, System>()
   private priorityToComponents = new Map<number, Set<Entity>>();
   private priorities = new Array<number>();
+  public blackBoard: Map<string, any> = new Map<string, any>();
 
   // Bookkeeping for entities.
   private nextEntityID = 0

@@ -8,6 +8,7 @@ export class UpdateSelected extends System {
   componentsRequired = new Set<Function>([MenuText]);
   lastUpdate = 10;
 
+
   update(game: Game, entities: Set<Entity>): void {
     this.lastUpdate += game.delta;
     if (this.lastUpdate < 0.2) {
@@ -26,18 +27,8 @@ export class UpdateSelected extends System {
       return;
     }
 
-    
-    // find selected
-    let selectedEntity = 0;
-    for(let entity of entities.values()) {
-      const m = this.ecs.getComponents(entity).get(MenuText);
-      if(m.selected) {
-        m.selected = false;
-        selectedEntity = entity;
-        break;
-      }
-    }
-
+    // get selected entity and new entity index
+    let selectedEntity = this.ecs.blackBoard.get('selected');
     const lvlsPerColumn = 18;
     let newEntity: number;
     if(keyPress == Key.UP) {
@@ -55,6 +46,8 @@ export class UpdateSelected extends System {
     }
    
     // updated selected
+    this.ecs.blackBoard.set('selected', newEntity);
+    this.ecs.getComponents(selectedEntity).get(MenuText).selected = false;
     this.ecs.getComponents(newEntity).get(MenuText).selected = true;
     this.lastUpdate = 0;
   }
