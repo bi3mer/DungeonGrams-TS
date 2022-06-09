@@ -126,6 +126,7 @@ export abstract class ECSScene extends Scene {
     this.entities.clear();
     this.priorityToComponents.clear();
     this.priorityToSystem.clear();
+    this.blackBoard.clear();
     this.priorities.length = 0;
     this.nextEntityID = 0;
   }

@@ -1,4 +1,5 @@
 import { Portal } from "../Components/Portal";
+import { Position } from "../Components/Position";
 import { Render } from "../Components/Render";
 import { Entity } from "../Engine/Entity";
 import { Game } from "../Engine/Game";
@@ -11,6 +12,14 @@ export class PortalSystem extends System {
     const [id] = entities; // there can only be one portal
     if(this.ecs.getBB('switch count') == 0) {
       this.ecs.getComponents(id).get(Render).character = 'O';
+
+      const playerID = this.ecs.getBB('player id');
+      const playerPos = this.ecs.getComponents(playerID).get(Position);
+      const portalPos = this.ecs.getComponents(id).get(Position);
+
+      if(playerPos.equals(portalPos)) {
+        this.ecs.setBB('game over', 1); // player won
+      }
     } else {
       this.ecs.getComponents(id).get(Render).character = 'o';
     }

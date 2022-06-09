@@ -1,5 +1,4 @@
 import { Position } from "../Components/Position";
-import { Render } from "../Components/Render";
 import { Switch } from "../Components/Switch";
 import { Entity } from "../Engine/Entity";
 import { Game } from "../Engine/Game";
