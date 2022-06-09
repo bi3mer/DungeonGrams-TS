@@ -7,12 +7,11 @@ import { LEVELS } from "../levels";
 import { RenderSystem } from "../Systems/RenderSystem";
 import { Portal } from "../Components/Portal";
 import { PortalSystem } from "../Systems/PortalSystem";
+import { PlayerSystem } from "../Systems/PlayerSystem";
 
 export class GameScene extends ECSScene {
   public scenePlayerWonIndex: number = 0;
   public scenePlayerLostIndex: number = 0;
-  private size: number = 20;
-  private playerID: number = 0;
 
   constructor() {
     super();
@@ -35,6 +34,15 @@ export class GameScene extends ECSScene {
           this.addComponent(id, new Portal());
         } else if (char == '@') {
           this.addComponent(id, new Player());
+          this.blackBoard.set('player id', id);
+          
+          const emptyID = this.addEntity();
+          this.addComponent(emptyID, new Render('-'));
+          this.addComponent(emptyID, new Position(x, y));
+        } else if (char == '#') {
+          const emptyID = this.addEntity();
+          this.addComponent(emptyID, new Render('-'));
+          this.addComponent(emptyID, new Position(x, y));
         } else if (char == '*') {
           switchCount += 1;
         }
@@ -43,6 +51,7 @@ export class GameScene extends ECSScene {
 
     this.blackBoard.set('switch count', switchCount);
 
+    this.addSystem(0, new PlayerSystem());
     this.addSystem(90, new PortalSystem());
     this.addSystem(100, new RenderSystem());
   }
