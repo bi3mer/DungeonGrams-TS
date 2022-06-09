@@ -10,13 +10,14 @@ export class RenderSystem extends System {
     '@': 'white',
     '-': '#d9d1d0',
     'X': '#636363',
-    '&': '#0ccef0',
+    '*': '#0ccef0',
     '\\': '#c300d1',
     '/': '#c300d1',
-    'o': '#203822',
+    'o': '#414d42',
     'O': '#19f00a',
     '#': 'red',
-    '^': '#f0cd0a'
+    '^': '#f0cd0a',
+    '&': '#259c2b',
   };
 
   update(game: Game, entities: Set<Entity>): void {
