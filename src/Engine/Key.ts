@@ -7,6 +7,8 @@ export enum Key {
   A,
   S,
   D,
+  Q,
+  R,
   SPACE,
   ESCAPE,
   ENTER,
@@ -40,6 +42,10 @@ export function keyCodeToKey(key: string): Key {
       return Key.D;
     case 'w': 
       return Key.W;
+    case 'r':
+      return Key.R;
+    case 'q': 
+      return Key.Q;
     case 'Enter':
       return Key.ENTER;
     default:

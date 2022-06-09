@@ -8,14 +8,21 @@ import { RenderSystem } from "../Systems/RenderSystem";
 import { Portal } from "../Components/Portal";
 import { PortalSystem } from "../Systems/PortalSystem";
 import { PlayerSystem } from "../Systems/PlayerSystem";
+import { Key } from "../Engine/Key";
+import { CollisionSystem } from "../Systems/CollisionSystem";
+import { EnemyAISystem } from "../Systems/EnemyAISystem";
+import { Movable } from "../Components/Movable";
 
 export class GameScene extends ECSScene {
-  public scenePlayerWonIndex: number = 0;
-  public scenePlayerLostIndex: number = 0;
+  public playerWonIndex = 0;
+  public playerLostIndex= 0;
+  public selfIndex = 0;
+  public mainMenuIndex = 0;
 
   constructor() {
     super();
     this.blackBoard.set('game over', 0);
+    this.blackBoard.set('restart', false)
   }
 
   public onEnter(game: Game): void {
@@ -38,6 +45,7 @@ export class GameScene extends ECSScene {
 
         const xPos = offsetX + x;
         const yPos = offsetY + y;
+
         xMin = Math.min(xMin, xPos);
         xMax = Math.max(xMax, xPos);
         yMin = Math.min(yMin, yPos);
@@ -54,9 +62,12 @@ export class GameScene extends ECSScene {
           this.addComponent(id, new Portal());
         } else if (char == '@') {
           this.addComponent(id, new Player());
+          this.addComponent(id, new Movable());
           this.blackBoard.set('player id', id);
         } else if (char == '*') {
           switchCount += 1;
+        } else if (char == '#') {
+          this.addComponent(id, new Movable());
         }
       }
     }
@@ -77,8 +88,10 @@ export class GameScene extends ECSScene {
     this.blackBoard.set('x mod', xMod);
     this.blackBoard.set('y mod', yMod); 
 
-    this.addSystem(0, new PlayerSystem());
-    this.addSystem(90, new PortalSystem());
+    this.addSystem(0,   new PlayerSystem());
+    this.addSystem(10,  new EnemyAISystem());
+    this.addSystem(50,  new CollisionSystem());
+    this.addSystem(90,  new PortalSystem());
     this.addSystem(100, new RenderSystem());
   }
   
@@ -89,9 +102,13 @@ export class GameScene extends ECSScene {
   public customUpdate(game: Game): number {
     const gameOver = this.blackBoard.get('game over')
     if (gameOver == -1) {
-      return this.scenePlayerLostIndex;
+      return this.playerLostIndex;
     } else if (gameOver == 1) {
-      return this.scenePlayerWonIndex;
+      return this.playerWonIndex;
+    } else if (game.keyDown.has(Key.R)) {
+      return this.selfIndex;
+    } else if (game.keyDown.has(Key.Q)) {
+      return this.mainMenuIndex;
     }
 
     return -1;

@@ -119,6 +119,7 @@ export abstract class ECSScene extends Scene {
     this.priorityToComponents.clear();
     this.priorityToSystem.clear();
     this.priorities.length = 0;
+    this.nextEntityID = 0;
   }
 
   private destroyEntity(entity: Entity): void {

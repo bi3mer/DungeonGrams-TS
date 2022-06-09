@@ -12,7 +12,7 @@ const gameScene = new GameScene();
 const playerLostScene = new PlayerLostScene();
 const playerWonScene = new PlayerWonScene();
 
-const starIndex = game.addScene(startScene);
+const startIndex = game.addScene(startScene);
 const selectionIndex = game.addScene(selectionScene);
 const gameIndex = game.addScene(gameScene);
 const lostIndex = game.addScene(playerLostScene);
@@ -21,10 +21,12 @@ const wonIndex = game.addScene(playerWonScene);
 startScene.sceneIndex = selectionIndex;
 selectionScene.sceneIndex = gameIndex;
 
-gameScene.scenePlayerLostIndex = lostIndex;
-gameScene.scenePlayerWonIndex = wonIndex;
+gameScene.playerLostIndex = lostIndex;
+gameScene.playerWonIndex = wonIndex;
+gameScene.selfIndex = gameIndex;
+gameScene.mainMenuIndex = startIndex;
 
-playerLostScene.sceneIndex = starIndex;
-playerWonScene.sceneIndex = starIndex;
+playerLostScene.sceneIndex = startIndex;
+playerWonScene.sceneIndex = startIndex;
 
 game.start();

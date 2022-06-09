@@ -20,12 +20,25 @@ export class StartScene extends Scene {
       return this.sceneIndex;
     } else {
       game.ctx.font = '40px Arial';
-      game.ctx.fillStyle = 'white'
-      game.ctx.fillText('DungeonGrams', game.width/3.5, game.height/2);
+      game.ctx.fillStyle = 'white';
+      game.ctx.fillText('DungeonGrams', 220, 100);
 
       game.ctx.font = '20px Arial';
-      game.ctx.fillStyle = 'white'
-      game.ctx.fillText('Press Enter key to start', game.width/2.9, game.height - game.height/3);
+      game.ctx.fillText('Press Enter to start', 275, 150);
+
+
+      game.ctx.fillStyle = 'yellow';
+      game.ctx.fillText('& gives you stamina', 40, 200);
+      game.ctx.fillText('Collect all * to open the portal.', 40, 222);
+      game.ctx.fillText('Step through the portal O to win!', 40, 244);
+      game.ctx.fillText('But make sure to avoid the enemies # and traps ^', 40, 266);
+
+      game.ctx.fillStyle = 'green';
+      game.ctx.fillText('WASD to move', 40, 350);
+      game.ctx.fillText('R to restart', 40, 375);
+      game.ctx.fillText('Q to quit', 40, 400);
+
+
       return -1;
     }
   }

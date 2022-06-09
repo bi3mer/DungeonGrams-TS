@@ -31,14 +31,16 @@ export class UpdateSelected extends System {
     let selectedEntity = this.ecs.blackBoard.get('selected');
     const lvlsPerColumn = 18;
     let newEntity: number;
-    if(keyPress == Key.UP) {
+    if(keyPress == Key.UP || keyPress == Key.W) {
       newEntity = selectedEntity - 1;
-    } else if (keyPress == Key.DOWN) {
+    } else if (keyPress == Key.DOWN || keyPress == Key.S) {
       newEntity =  selectedEntity + 1;
-    } else if (keyPress == Key.RIGHT) {
+    } else if (keyPress == Key.RIGHT || keyPress == Key.D) {
       newEntity = selectedEntity + lvlsPerColumn;
-    } else {
+    } else if (keyPress == Key.LEFT || keyPress == Key.A) {
       newEntity = selectedEntity - lvlsPerColumn;
+    } else {
+      newEntity = selectedEntity;
     }
 
     if(!entities.has(newEntity)) {
