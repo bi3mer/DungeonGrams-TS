@@ -11,6 +11,7 @@ export class GameScene extends ECSScene {
   public scenePlayerLostIndex: number = 0;
   private size: number = 20;
   private playerID: number = 0;
+  
 
   constructor() {
     super();
@@ -23,7 +24,7 @@ export class GameScene extends ECSScene {
       for (let x = 0; x < lvl[y].length; ++x) {
         const char = lvl[y][x];
         const id = this.addEntity();
-        this.addComponent(id, new Render('white', char));
+        this.addComponent(id, new Render(char));
         this.addComponent(id, new Position(x, y));
       }
     }
