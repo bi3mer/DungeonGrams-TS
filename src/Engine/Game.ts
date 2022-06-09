@@ -10,7 +10,7 @@ export class Game {
   public readonly width: number;
   public readonly height: number;
   public delta: number;
-  public blackBoard: Map<string, any> = new Map<string, any>();
+  private blackBoard: Map<string, any> = new Map<string, any>();
 
   constructor() {
     window.addEventListener('keydown', (e: KeyboardEvent) => {
@@ -38,6 +38,14 @@ export class Game {
     this.width = canvas.width;
     this.height = canvas.height;
     this.delta = 0;
+  }
+
+  public setBB(key: string, val: any): void {
+    this.blackBoard.set(key, val);
+  }
+
+  public getBB(key: string): any {
+    return this.blackBoard.get(key);
   }
 
   public addScene(scene: Scene): number {

@@ -28,7 +28,7 @@ export class SelectionScene extends ECSScene {
       this.addComponent(id, new MenuText(this.sortedLevels[i], i, selected));
     }
 
-    this.blackBoard.set('selected', 0);
+    this.setBB('selected', 0);
     
     this.addSystem(0, new UpdateSelected());
     this.addSystem(10, new RenderMenuTextSystem());
@@ -40,8 +40,8 @@ export class SelectionScene extends ECSScene {
   
   public customUpdate(game: Game): number {
     if (game.keyDown.has(Key.ENTER)) {
-      const selected = this.blackBoard.get('selected');
-      game.blackBoard.set('level', this.getComponents(selected).get(MenuText).name);
+      const selected = this.getBB('selected');
+      game.setBB('level', this.getComponents(selected).get(MenuText).name);
       return this.sceneIndex;
     }
 

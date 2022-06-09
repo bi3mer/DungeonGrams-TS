@@ -9,7 +9,7 @@ export class PortalSystem extends System {
 
   update(game: Game, entities: Set<Entity>): void {
     const [id] = entities; // there can only be one portal
-    if(this.ecs.blackBoard.get('switch count') == 0) {
+    if(this.ecs.getBB('switch count') == 0) {
       this.ecs.getComponents(id).get(Render).character = 'O';
     } else {
       this.ecs.getComponents(id).get(Render).character = 'o';

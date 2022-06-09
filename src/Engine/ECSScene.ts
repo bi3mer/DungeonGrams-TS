@@ -14,7 +14,7 @@ export abstract class ECSScene extends Scene {
   private priorityToSystem = new Map<number, System>()
   private priorityToComponents = new Map<number, Set<Entity>>();
   private priorities = new Array<number>();
-  public blackBoard: Map<string, any> = new Map<string, any>();
+  private blackBoard: Map<string, any> = new Map<string, any>();
 
   // Bookkeeping for entities.
   private nextEntityID = 0
@@ -78,6 +78,14 @@ export abstract class ECSScene extends Scene {
   public removeComponent(entity: Entity, componentClass: Function): void {
     this.entities.get(entity)?.delete(componentClass);
     this.checkE(entity);
+  }
+
+  public setBB(key: string, val: any): void {
+    this.blackBoard.set(key, val);
+  }
+
+  public getBB(key: string): any {
+    return this.blackBoard.get(key);
   }
 
   // API: Systems

@@ -22,8 +22,8 @@ export class RenderSystem extends System {
 
 
   update(game: Game, entities: Set<Entity>): void {
-    const xMod: number = this.ecs.blackBoard.get('x mod');
-    const yMod: number = this.ecs.blackBoard.get('y mod');
+    const xMod: number = this.ecs.getBB('x mod');
+    const yMod: number = this.ecs.getBB('y mod');
 
     game.ctx.font = '20px Arial';
     for(let entity of entities.values()) {

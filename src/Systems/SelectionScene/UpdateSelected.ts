@@ -28,7 +28,7 @@ export class UpdateSelected extends System {
     }
 
     // get selected entity and new entity index
-    let selectedEntity = this.ecs.blackBoard.get('selected');
+    let selectedEntity = this.ecs.getBB('selected');
     const lvlsPerColumn = 18;
     let newEntity: number;
     if(keyPress == Key.UP || keyPress == Key.W) {
@@ -48,7 +48,7 @@ export class UpdateSelected extends System {
     }
    
     // updated selected
-    this.ecs.blackBoard.set('selected', newEntity);
+    this.ecs.setBB('selected', newEntity);
     this.ecs.getComponents(selectedEntity).get(MenuText).selected = false;
     this.ecs.getComponents(newEntity).get(MenuText).selected = true;
     this.lastUpdate = 0;

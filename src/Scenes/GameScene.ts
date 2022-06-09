@@ -12,6 +12,8 @@ import { Key } from "../Engine/Key";
 import { CollisionSystem } from "../Systems/CollisionSystem";
 import { EnemyAISystem } from "../Systems/EnemyAISystem";
 import { Movable } from "../Components/Movable";
+import { Switch } from "../Components/Switch";
+import { SwitchCollision } from "../Systems/SwitchCollision";
 
 export class GameScene extends ECSScene {
   public playerWonIndex = 0;
@@ -21,8 +23,8 @@ export class GameScene extends ECSScene {
 
   constructor() {
     super();
-    this.blackBoard.set('game over', 0);
-    this.blackBoard.set('restart', false)
+    this.setBB('game over', 0);
+    this.setBB('restart', false)
   }
 
   public onEnter(game: Game): void {
@@ -36,7 +38,7 @@ export class GameScene extends ECSScene {
     let yMax = 0;
 
     let switchCount = 0;
-    const lvlKey = game.blackBoard.get('level') as string;
+    const lvlKey = game.getBB('level') as string;
     const lvl = LEVELS[lvlKey as keyof typeof LEVELS];
     for (let y = 0; y < lvl.length; ++y) {
       for (let x = 0; x < lvl[y].length; ++x) {
@@ -60,11 +62,13 @@ export class GameScene extends ECSScene {
         
         if (char == 'O') {
           this.addComponent(id, new Portal());
+          this.setBB('portal id', id);
         } else if (char == '@') {
           this.addComponent(id, new Player());
           this.addComponent(id, new Movable());
-          this.blackBoard.set('player id', id);
+          this.setBB('player id', id);
         } else if (char == '*') {
+          this.addComponent(id, new Switch());
           switchCount += 1;
         } else if (char == '#') {
           this.addComponent(id, new Movable());
@@ -82,15 +86,15 @@ export class GameScene extends ECSScene {
       }
     }
 
-    this.blackBoard.set('switch count', switchCount);
-    this.blackBoard.set('offset x', offsetX);
-    this.blackBoard.set('offset y', offsetY);
-    this.blackBoard.set('x mod', xMod);
-    this.blackBoard.set('y mod', yMod); 
+    this.setBB('switch count', switchCount);
+    this.setBB('offset x', offsetX);
+    this.setBB('offset y', offsetY);
+    this.setBB('x mod', xMod);
+    this.setBB('y mod', yMod); 
 
     this.addSystem(0,   new PlayerSystem());
     this.addSystem(10,  new EnemyAISystem());
-    this.addSystem(50,  new CollisionSystem());
+    this.addSystem(50,  new SwitchCollision());
     this.addSystem(90,  new PortalSystem());
     this.addSystem(100, new RenderSystem());
   }
@@ -100,7 +104,7 @@ export class GameScene extends ECSScene {
   }
 
   public customUpdate(game: Game): number {
-    const gameOver = this.blackBoard.get('game over')
+    const gameOver = this.getBB('game over')
     if (gameOver == -1) {
       return this.playerLostIndex;
     } else if (gameOver == 1) {
