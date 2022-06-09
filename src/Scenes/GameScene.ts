@@ -9,11 +9,12 @@ import { Portal } from "../Components/Portal";
 import { PortalSystem } from "../Systems/PortalSystem";
 import { PlayerSystem } from "../Systems/PlayerSystem";
 import { Key } from "../Engine/Key";
-import { CollisionSystem } from "../Systems/CollisionSystem";
 import { EnemyAISystem } from "../Systems/EnemyAISystem";
 import { Movable } from "../Components/Movable";
 import { Switch } from "../Components/Switch";
 import { SwitchCollision } from "../Systems/SwitchCollision";
+import { Enemy } from "../Components/Enemy";
+import { EnemyCollision } from "../Systems/EnemyCollision";
 
 export class GameScene extends ECSScene {
   public playerWonIndex = 0;
@@ -72,6 +73,9 @@ export class GameScene extends ECSScene {
           switchCount += 1;
         } else if (char == '#') {
           this.addComponent(id, new Movable());
+          this.addComponent(id, new Enemy());
+        } else if (char == '^') {
+          this.addComponent(id, new Enemy());
         }
       }
     }
@@ -94,6 +98,7 @@ export class GameScene extends ECSScene {
 
     this.addSystem(0,   new PlayerSystem());
     this.addSystem(10,  new EnemyAISystem());
+    this.addSystem(40,  new EnemyCollision());
     this.addSystem(50,  new SwitchCollision());
     this.addSystem(90,  new PortalSystem());
     this.addSystem(100, new RenderSystem());
