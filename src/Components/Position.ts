@@ -14,4 +14,9 @@ export class Position extends Component {
   public equals(other: Position): boolean {
     return this.x == other.x && this.y == other.y;
   }
+
+  public hash(): number {
+    // Cantor pairing function
+    return ((this.x + this.y)*(this.x + this.y + 1)/2) + this.y;
+  }
 }

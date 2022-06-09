@@ -20,18 +20,20 @@ export class RenderSystem extends System {
     '&': '#259c2b',
   };
 
+
   update(game: Game, entities: Set<Entity>): void {
-    const xMod = 20;
-    const yMod = 20;
-    const x = 150;
-    const y = 150;
+    const xMod: number = this.ecs.blackBoard.get('x mod');
+    const yMod: number = this.ecs.blackBoard.get('y mod');
 
     game.ctx.font = '20px Arial';
     for(let entity of entities.values()) {
+      // get components
       const render = this.ecs.getComponents(entity).get(Render)
       const pos = this.ecs.getComponents(entity).get(Position);
+
+      // render
       game.ctx.fillStyle = this.charToColor[render.character];
-      game.ctx.fillText(render.character, x + pos.x*xMod, y + pos.y*yMod);
+      game.ctx.fillText(render.character, pos.x*xMod, pos.y*yMod);
     }
   }
 }
