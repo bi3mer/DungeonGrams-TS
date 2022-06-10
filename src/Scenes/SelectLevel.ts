@@ -1,10 +1,11 @@
-import { LEVELS } from "../levels"; 
-import { C } from "../Components";
-import { UpdateSelected } from "../Systems/SelectionScene/UpdateSelected";
-import { RenderMenuTextSystem } from "../Systems/SelectionScene/RenderMenuText";
 import { Engine, ECSScene, Key } from "../WorldEngine";
 
-export class SelectionScene extends ECSScene {
+import { RenderMenuTextSystem } from "../Systems/SelectionScene/RenderMenuText";
+import { UpdateSelected } from "../Systems/SelectionScene/UpdateSelected";
+import { LEVELS } from "../levels"; 
+import { C } from "../Components";
+
+export class SelectLevel extends ECSScene {
   public sceneIndex: number = 0;
   private sortedLevels: Array<string>;
   

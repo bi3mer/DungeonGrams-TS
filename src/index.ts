@@ -1,16 +1,12 @@
 import { Engine } from "./WorldEngine";
-import { GameScene } from "./Scenes/GameScene";
-import { PlayerLostScene } from "./Scenes/PlayerLostScene";
-import { PlayerWonScene } from "./Scenes/PlayerWonScene";
-import { SelectionScene } from "./Scenes/SelectionScene";
-import { StartScene } from "./Scenes/StartScene";
+import { Scene } from "./Scenes";
 
 const engine = new Engine();
-const startScene = new StartScene();
-const selectionScene = new SelectionScene();
-const gameScene = new GameScene();
-const playerLostScene = new PlayerLostScene();
-const playerWonScene = new PlayerWonScene();
+const startScene = new Scene.StartMenu();
+const selectionScene = new Scene.SelectLevel();
+const gameScene = new Scene.Game();
+const playerLostScene = new Scene.PlayerLost();
+const playerWonScene = new Scene.PlayerWon();
 
 const startIndex = engine.addScene(startScene);
 const selectionIndex = engine.addScene(selectionScene);

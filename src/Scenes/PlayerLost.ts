@@ -1,7 +1,6 @@
-import { Engine } from "../WorldEngine";
-import { Scene } from "../WorldEngine/src/Scene";
+import { Engine, Scene } from "../WorldEngine";
 
-export class PlayerWonScene extends Scene {
+export class PlayerLost extends Scene {
   public sceneIndex: number = 0;
   public timer: number = 0;
 
@@ -22,7 +21,7 @@ export class PlayerWonScene extends Scene {
     } else {
       engine.ctx.font = '40px Arial';
       engine.ctx.fillStyle = 'green'
-      engine.ctx.fillText('You Won! Nice!', engine.width/3.5, engine.height/2);
+      engine.ctx.fillText('You Lost! :/', engine.width/3.5, engine.height/2);
       return -1;
     }
   }

@@ -1,7 +1,6 @@
-import { Engine, Key } from "../WorldEngine";
-import { Scene } from "../WorldEngine/src/Scene";
+import { Engine, Key, Scene } from "../WorldEngine";
 
-export class StartScene extends Scene {
+export class StartMenu extends Scene {
   public sceneIndex: number = 0;
   public timer: number = 0;
 
