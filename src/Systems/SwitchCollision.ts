@@ -8,7 +8,6 @@ export class SwitchCollision extends System {
   componentsRequired = new Set<Function>([Switch]);
 
   update(game: Game, entities: Set<Entity>): void {
-    // const playerID = this.ecs.blackBoard.get('player id');
     const playerID = this.ecs.getBB('player id');
     const playerPos = this.ecs.getComponents(playerID).get(Position);
     

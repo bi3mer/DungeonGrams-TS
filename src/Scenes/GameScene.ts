@@ -15,6 +15,8 @@ import { Switch } from "../Components/Switch";
 import { SwitchCollision } from "../Systems/SwitchCollision";
 import { Enemy } from "../Components/Enemy";
 import { EnemyCollision } from "../Systems/EnemyCollision";
+import { PlayerCollision } from "../Systems/PlayerCollision";
+import { Collider } from "../Components/Collider";
 
 export class GameScene extends ECSScene {
   public playerWonIndex = 0;
@@ -76,16 +78,24 @@ export class GameScene extends ECSScene {
           this.addComponent(id, new Enemy());
         } else if (char == '^') {
           this.addComponent(id, new Enemy());
+        } else if (char == 'X' || char == '\\' || char == '/') {
+          this.addComponent(id, new Collider());
         }
       }
     }
 
+    console.log(yMin);
     for(let y = 3; y < game.height/yMod -1; ++y) {
       for(let x = 1; x < game.width/xMod -1; ++x) {
         if (x < xMin || x > xMax || y < yMin || y > yMax) {
             const id = this.addEntity();
-          this.addComponent(id, new Render('X'));
-          this.addComponent(id, new Position(x, y));
+            this.addComponent(id, new Render('X'));
+            this.addComponent(id, new Position(x, y));
+
+            if (x == xMin - 1 || y == yMin - 1 || x == xMax + 1 || y == yMax + 1) {
+              this.addComponent(id, new Collider());
+            }
+            // this.addComponent(id, new Collider());
         }
       }
     }
@@ -97,7 +107,8 @@ export class GameScene extends ECSScene {
     this.setBB('y mod', yMod); 
 
     this.addSystem(0,   new PlayerSystem());
-    this.addSystem(10,  new EnemyAISystem());
+    this.addSystem(10,  new PlayerCollision());
+    this.addSystem(20,  new EnemyAISystem());
     this.addSystem(40,  new EnemyCollision());
     this.addSystem(50,  new SwitchCollision());
     this.addSystem(90,  new PortalSystem());

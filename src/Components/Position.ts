@@ -19,4 +19,9 @@ export class Position extends Component {
     // Cantor pairing function
     return ((this.x + this.y)*(this.x + this.y + 1)/2) + this.y;
   }
+
+  public updateOld(): void {
+    this.oldX = this.x;
+    this.oldY = this.y;
+  }
 }
