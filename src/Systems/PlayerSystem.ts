@@ -1,10 +1,8 @@
 import { Player } from "../Components/Player";
 import { Position } from "../Components/Position";
 import { Render } from "../Components/Render";
-import { Entity } from "../Engine/Entity";
-import { Game } from "../Engine/Game";
-import { Key } from "../Engine/Key";
-import { System } from "../Engine/System";
+import { Engine, System, Entity, Key } from "../WorldEngine";
+
 
 export class PlayerSystem extends System {
   componentsRequired = new Set<Function>([Position, Render, Player]);
@@ -14,8 +12,8 @@ export class PlayerSystem extends System {
     super();
   }
 
-  update(game: Game, entities: Set<Entity>): void {
-    this.timeSinceLastMove += game.delta;
+  update(engine: Engine, entities: Set<Entity>): void {
+    this.timeSinceLastMove += engine.delta;
     if (this.timeSinceLastMove < 0.08) {
       return;
     }
@@ -27,7 +25,7 @@ export class PlayerSystem extends System {
     const x = pos.x;
     const y = pos.y;
 
-    for(let key of game.keyDown) {
+    for(let key of engine.keyDown) {
       switch(key) {
         case Key.A:
         case Key.LEFT:

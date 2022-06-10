@@ -1,5 +1,5 @@
-import { Game } from "../Engine/Game";
-import { Scene } from "../Engine/Scene";
+import { Engine } from "../WorldEngine";
+import { Scene } from "../WorldEngine/src/Scene";
 
 export class PlayerWonScene extends Scene {
   public sceneIndex: number = 0;
@@ -9,20 +9,20 @@ export class PlayerWonScene extends Scene {
     super();
   }
 
-  public onEnter(game: Game): void { 
+  public onEnter(engine: Engine): void { 
     this.timer = 0;
   }
   
-  public onExit(game: Game): void { }
+  public onExit(engine: Engine): void { }
 
-  public update(game: Game): number {
-    this.timer += game.delta
+  public update(engine: Engine): number {
+    this.timer += engine.delta
     if(this.timer > 2) {
       return this.sceneIndex;
     } else {
-      game.ctx.font = '40px Arial';
-      game.ctx.fillStyle = 'green'
-      game.ctx.fillText('You Won! Nice!', game.width/3.5, game.height/2);
+      engine.ctx.font = '40px Arial';
+      engine.ctx.fillStyle = 'green'
+      engine.ctx.fillText('You Won! Nice!', engine.width/3.5, engine.height/2);
       return -1;
     }
   }

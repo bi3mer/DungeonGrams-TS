@@ -1,7 +1,7 @@
 import { Key, keyCodeToKey } from "./Key";
 import { Scene } from "./Scene";
 
-export class Game {
+export class Engine {
   private scenes = new Array<Scene>();
   private sceneIndex: number = 0;
   public readonly ctx: CanvasRenderingContext2D;;

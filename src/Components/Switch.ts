@@ -1,4 +1,4 @@
-import { Component } from "../Engine/Component";
+import { Component } from "../WorldEngine/";
 
 export class Switch extends Component {
   constructor() { 

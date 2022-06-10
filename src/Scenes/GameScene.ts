@@ -1,5 +1,3 @@
-import { ECSScene } from "../Engine/ECSScene";
-import { Game } from "../Engine/Game";
 import { Position } from "../Components/Position";
 import { Render } from "../Components/Render";
 import { Player } from "../Components/Player";
@@ -8,7 +6,6 @@ import { RenderSystem } from "../Systems/RenderSystem";
 import { Portal } from "../Components/Portal";
 import { PortalSystem } from "../Systems/PortalSystem";
 import { PlayerSystem } from "../Systems/PlayerSystem";
-import { Key } from "../Engine/Key";
 import { EnemyAISystem } from "../Systems/EnemyAISystem";
 import { Movable } from "../Components/Movable";
 import { Switch } from "../Components/Switch";
@@ -17,6 +14,9 @@ import { Enemy } from "../Components/Enemy";
 import { EnemyCollision } from "../Systems/EnemyCollision";
 import { PlayerCollision } from "../Systems/PlayerCollision";
 import { Collider } from "../Components/Collider";
+
+import { Engine, ECSScene, Key } from "../WorldEngine";
+
 
 export class GameScene extends ECSScene {
   public playerWonIndex = 0;
@@ -30,7 +30,7 @@ export class GameScene extends ECSScene {
     this.setBB('restart', false)
   }
 
-  public onEnter(game: Game): void {
+  public onEnter(engine: Engine): void {
     const xMod = 20;
     const yMod = 20;
     const offsetX = 8;
@@ -41,7 +41,7 @@ export class GameScene extends ECSScene {
     let yMax = 0;
 
     let switchCount = 0;
-    const lvlKey = game.getBB('level') as string;
+    const lvlKey = engine.getBB('level') as string;
     const lvl = LEVELS[lvlKey as keyof typeof LEVELS];
     for (let y = 0; y < lvl.length; ++y) {
       for (let x = 0; x < lvl[y].length; ++x) {
@@ -85,8 +85,8 @@ export class GameScene extends ECSScene {
     }
 
     console.log(yMin);
-    for(let y = 3; y < game.height/yMod -1; ++y) {
-      for(let x = 1; x < game.width/xMod -1; ++x) {
+    for(let y = 3; y < engine.height/yMod -1; ++y) {
+      for(let x = 1; x < engine.width/xMod -1; ++x) {
         if (x < xMin || x > xMax || y < yMin || y > yMax) {
             const id = this.addEntity();
             this.addComponent(id, new Render('X'));
@@ -115,19 +115,19 @@ export class GameScene extends ECSScene {
     this.addSystem(100, new RenderSystem());
   }
   
-  public onExit(game: Game): void {
+  public onExit(engine: Engine): void {
     this.clear();
   }
 
-  public customUpdate(game: Game): number {
+  public customUpdate(engine: Engine): number {
     const gameOver = this.getBB('game over')
     if (gameOver == -1) {
       return this.playerLostIndex;
     } else if (gameOver == 1) {
       return this.playerWonIndex;
-    } else if (game.keyDown.has(Key.R)) {
+    } else if (engine.keyDown.has(Key.R)) {
       return this.selfIndex;
-    } else if (game.keyDown.has(Key.Q)) {
+    } else if (engine.keyDown.has(Key.Q)) {
       return this.mainMenuIndex;
     }
 

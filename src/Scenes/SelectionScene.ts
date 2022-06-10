@@ -1,10 +1,8 @@
-import { Game } from "../Engine/Game";
-import { ECSScene } from "../Engine/ECSScene";
 import { LEVELS } from "../levels"; 
 import { MenuText } from "../Components/SelectionScene/MenuText";
 import { UpdateSelected } from "../Systems/SelectionScene/UpdateSelected";
 import { RenderMenuTextSystem } from "../Systems/SelectionScene/RenderMenuText";
-import { Key } from "../Engine/Key";
+import { Engine, ECSScene, Key } from "../WorldEngine";
 
 export class SelectionScene extends ECSScene {
   public sceneIndex: number = 0;
@@ -21,7 +19,7 @@ export class SelectionScene extends ECSScene {
     this.sortedLevels.sort();
   }
   
-  public onEnter(game: Game): void { 
+  public onEnter(engine: Engine): void { 
     for(let i = 0; i < this.sortedLevels.length; ++i) {
       const id = this.addEntity();
       const selected = i == 0;
@@ -34,14 +32,14 @@ export class SelectionScene extends ECSScene {
     this.addSystem(10, new RenderMenuTextSystem());
   }
   
-  public onExit(game: Game): void { 
+  public onExit(engine: Engine): void { 
     this.clear();
   }
   
-  public customUpdate(game: Game): number {
-    if (game.keyDown.has(Key.ENTER)) {
+  public customUpdate(engine: Engine): number {
+    if (engine.keyDown.has(Key.ENTER)) {
       const selected = this.getBB('selected');
-      game.setBB('level', this.getComponents(selected).get(MenuText).name);
+      engine.setBB('level', this.getComponents(selected).get(MenuText).name);
       return this.sceneIndex;
     }
 

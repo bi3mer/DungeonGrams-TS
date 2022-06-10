@@ -1,13 +1,12 @@
 import { Collider } from "../Components/Collider";
 import { Position } from "../Components/Position";
-import { Entity } from "../Engine/Entity";
-import { Game } from "../Engine/Game";
-import { System } from "../Engine/System";
+import { Engine, System, Entity } from "../WorldEngine";
+
 
 export class PlayerCollision extends System {
   componentsRequired = new Set<Function>([Collider]);
 
-  update(game: Game, entities: Set<Entity>): void {
+  update(engine: Engine, entities: Set<Entity>): void {
     const playerID = this.ecs.getBB('player id');
     const playerPos = this.ecs.getComponents(playerID).get(Position);
 

@@ -1,4 +1,4 @@
-import { Game } from "./Game";
+import { Engine } from "./Engine";
 import { Scene } from "./Scene";
 
 import { Component, ComponentContainer } from "./Component";
@@ -20,7 +20,7 @@ export abstract class ECSScene extends Scene {
   private nextEntityID = 0
   private entitiesToDestroy = new Array<Entity>()
 
-  public abstract customUpdate(game: Game): number;
+  public abstract customUpdate(engine: Engine): number;
 
   /**
    * Default return -1. Any other numbers will tell the game engine to change 
@@ -28,13 +28,13 @@ export abstract class ECSScene extends Scene {
    * @param canvas 
    * @param keyPresses 
    */
-  public update(game: Game): number {
+  public update(engine: Engine): number {
     // Update all systems. (Later, we'll add a way to specify the
     // update order.)
     for (let priority of this.priorities) {
       const system = this.priorityToSystem.get(priority)!;
       const components = this.priorityToComponents.get(priority)!;
-      system.update(game, components);
+      system.update(engine, components);
     }
 
     // Remove any entities that were marked for deletion during the
@@ -43,7 +43,7 @@ export abstract class ECSScene extends Scene {
       this.destroyEntity(this.entitiesToDestroy.pop()!);
     }
 
-    return this.customUpdate(game);
+    return this.customUpdate(engine);
   }
   
 

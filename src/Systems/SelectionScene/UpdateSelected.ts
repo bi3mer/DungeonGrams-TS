@@ -1,22 +1,19 @@
-import { Entity } from "../../Engine/Entity";
-import { Game } from "../../Engine/Game";
-import { System } from "../../Engine/System";
+import { Engine, System, Entity, Key } from "../../WorldEngine";
 import { MenuText } from "../../Components/SelectionScene/MenuText";
-import { Key } from "../../Engine/Key";
 
 export class UpdateSelected extends System {
   componentsRequired = new Set<Function>([MenuText]);
   lastUpdate = 10;
 
 
-  update(game: Game, entities: Set<Entity>): void {
-    this.lastUpdate += game.delta;
+  update(engine: Engine, entities: Set<Entity>): void {
+    this.lastUpdate += engine.delta;
     if (this.lastUpdate < 0.2) {
       return;
     }
 
     let keyPress = Key.INVALID;
-    for(let key of game.keyDown) {
+    for(let key of engine.keyDown) {
       if (key == Key.DOWN || key == Key.UP || Key.RIGHT || Key.LEFT) {
         keyPress = key;
         break;

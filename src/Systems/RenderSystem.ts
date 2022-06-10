@@ -1,8 +1,7 @@
 import { Position } from "../Components/Position";
 import { Render } from "../Components/Render";
-import { Entity } from "../Engine/Entity";
-import { Game } from "../Engine/Game";
-import { System } from "../Engine/System";
+import { Engine, System, Entity } from "../WorldEngine";
+
 
 export class RenderSystem extends System {
   componentsRequired = new Set<Function>([Position, Render]);
@@ -21,19 +20,19 @@ export class RenderSystem extends System {
   };
 
 
-  update(game: Game, entities: Set<Entity>): void {
+  update(engine: Engine, entities: Set<Entity>): void {
     const xMod: number = this.ecs.getBB('x mod');
     const yMod: number = this.ecs.getBB('y mod');
 
-    game.ctx.font = '20px Arial';
+    engine.ctx.font = '20px Arial';
     for(let entity of entities.values()) {
       // get components
       const render = this.ecs.getComponents(entity).get(Render)
       const pos = this.ecs.getComponents(entity).get(Position);
 
       // render
-      game.ctx.fillStyle = this.charToColor[render.character];
-      game.ctx.fillText(render.character, pos.x*xMod, pos.y*yMod);
+      engine.ctx.fillStyle = this.charToColor[render.character];
+      engine.ctx.fillText(render.character, pos.x*xMod, pos.y*yMod);
     }
   }
 }

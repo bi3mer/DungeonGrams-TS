@@ -1,4 +1,4 @@
-import { Game } from "./Game";
+import { Engine } from "./Engine";
 
 export abstract class Scene {
   /**
@@ -7,8 +7,8 @@ export abstract class Scene {
    * @param canvas 
    * @param keyPresses 
    */
-  public abstract update(game: Game): number;
+  public abstract update(engine: Engine): number;
   
-  public abstract onEnter(game: Game): void;
-  public abstract onExit(game: Game): void;
+  public abstract onEnter(engine: Engine): void;
+  public abstract onExit(engine: Engine): void;
 };
