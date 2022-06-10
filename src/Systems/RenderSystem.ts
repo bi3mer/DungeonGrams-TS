@@ -32,7 +32,10 @@ export class RenderSystem extends System {
 
       // render
       engine.ctx.fillStyle = this.charToColor[render.character];
-      engine.ctx.fillText(render.character, pos.x*xMod, pos.y*yMod);
+      engine.ctx.fillText(
+        render.character, 
+        pos.getX()*xMod, 
+        pos.getY()*yMod);
     }
   }
 }

@@ -1,20 +1,18 @@
 import { EnemyAISystem } from "./EnemyAISystem";
 import { EnemyCollision } from "./EnemyCollision";
-import { FoodCollision } from "./FoodCollision";
 import { PlayerCollision } from "./PlayerCollision";
-import { PlayerSystem } from "./PlayerSystem";
+import { PlayerMovement } from "./PlayerMovement";
 import { PortalSystem } from "./PortalSystem";
 import { RenderSystem } from "./RenderSystem";
-import { SwitchCollision } from "./SwitchCollision";
+import { UpdatePlayerTurn } from "./UpdatePlayerTurn";
 
 // Systems
 export const S = {
-    EnemyAISystem,
-    EnemyCollision,
-    FoodCollision,
-    PlayerCollision,
-    PlayerSystem,
-    PortalSystem,
-    RenderSystem,
-    SwitchCollision,
+  EnemyAISystem,
+  PlayerCollision,
+  EnemyCollision,
+  PlayerMovement,
+  PortalSystem,
+  RenderSystem,
+  UpdatePlayerTurn,
 };

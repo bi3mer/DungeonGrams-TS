@@ -1,5 +1,6 @@
 import { Collider } from "./Collider";
 import { Enemy } from "./Enemy";
+import { Food } from "./Food";
 import { MenuText } from "./MenuText";
 import { Movable } from "./Movable";
 import { Player } from "./Player";
@@ -15,5 +16,6 @@ export const C = {
     Player,
     Portal,
     Render,
-    Switch
+    Switch,
+    Food,
 };

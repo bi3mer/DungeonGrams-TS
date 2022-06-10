@@ -3,9 +3,10 @@ import { S } from "../Systems";
 import { LEVELS } from "../levels";
 
 
-import { Engine, ECSScene, Key, CommonComponents } from "../WorldEngine";
+import { Engine, ECSScene, Key, CommonComponents, Utility } from "../WorldEngine";
+import { Collider } from "../Components/Collider";
 const Position2d = CommonComponents.Position2d;
-
+const GridCollisions = Utility.GridCollisions;
 
 export class Game extends ECSScene {
   public playerWonIndex = 0;
@@ -29,6 +30,8 @@ export class Game extends ECSScene {
     let yMin = 1000;
     let yMax = 0;
 
+    const gc = new GridCollisions();
+
     let switchCount = 0;
     const lvlKey = engine.getBB('level') as string;
     const lvl = LEVELS[lvlKey as keyof typeof LEVELS];
@@ -50,13 +53,15 @@ export class Game extends ECSScene {
         }
         
         this.addComponent(id, new C.Render(char));
-        this.addComponent(id, new Position2d(xPos, yPos));
+        const pos = new Position2d(xPos, yPos);
+        this.addComponent(id, pos);
+        gc.set(pos, id);
         
         if (char == 'O') {
           this.addComponent(id, new C.Portal());
           this.setBB('portal id', id);
         } else if (char == '@') {
-          this.addComponent(id, new C.Player());
+          this.addComponent(id, new C.Player(35));
           this.addComponent(id, new C.Movable());
           this.setBB('player id', id);
         } else if (char == '*') {
@@ -67,8 +72,10 @@ export class Game extends ECSScene {
           this.addComponent(id, new C.Enemy());
         } else if (char == '^') {
           this.addComponent(id, new C.Enemy());
-        } else if (char == 'X' || char == '\\' || char == '/') {
-          this.addComponent(id, new C.Collider());
+        } else if (char == '/' || char == '\\' || char == 'X') {
+          this.addComponent(id, new Collider());
+        } else if (char == '&') {
+          this.addComponent(id, new C.Food());
         }
       }
     }
@@ -77,14 +84,15 @@ export class Game extends ECSScene {
     for(let y = 3; y < engine.height/yMod -1; ++y) {
       for(let x = 1; x < engine.width/xMod -1; ++x) {
         if (x < xMin || x > xMax || y < yMin || y > yMax) {
-            const id = this.addEntity();
-            this.addComponent(id, new C.Render('X'));
-            this.addComponent(id, new Position2d(x, y));
+          const id = this.addEntity();
+          this.addComponent(id, new C.Render('X'));
+          const pos = new Position2d(x, y);
+          this.addComponent(id, pos);
 
-            if (x == xMin - 1 || y == yMin - 1 || x == xMax + 1 || y == yMax + 1) {
-              this.addComponent(id, new C.Collider());
-            }
-            // this.addComponent(id, new Collider());
+          if (x == xMin - 1 || y == yMin - 1 || x == xMax + 1 || y == yMax + 1) {
+            gc.set(pos, id);
+            this.addComponent(id, new C.Collider());
+          }
         }
       }
     }
@@ -94,14 +102,16 @@ export class Game extends ECSScene {
     this.setBB('offset y', offsetY);
     this.setBB('x mod', xMod);
     this.setBB('y mod', yMod); 
+    this.setBB('grid collisions', gc);
+    this.setBB('player turn', true);
 
-    this.addSystem(0,   new S.PlayerSystem());
-    this.addSystem(10,  new S.PlayerCollision());
+    this.addSystem(0,   new S.PlayerMovement());
+    this.addSystem(10,  new S.PlayerCollision()); 
     this.addSystem(20,  new S.EnemyAISystem());
-    this.addSystem(40,  new S.EnemyCollision());
-    this.addSystem(50,  new S.SwitchCollision());
-    this.addSystem(90,  new S.PortalSystem());
-    this.addSystem(100, new S.RenderSystem());
+    this.addSystem(30,  new S.EnemyCollision());
+    this.addSystem(90,  new S.PortalSystem());   // only run if the player moved
+    this.addSystem(100, new S.RenderSystem());   // only run a change was made
+    this.addSystem(900, new S.UpdatePlayerTurn());
   }
   
   public onExit(engine: Engine): void {

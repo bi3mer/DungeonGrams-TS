@@ -10,5 +10,10 @@ export { Key } from "./src/Key";
 
 import { Position2d } from "./src/Components/Position2d";
 export const CommonComponents = {
-    Position2d: Position2d
+    Position2d
 };
+
+import { GridCollisions } from "./src/Utility/GridCollisions";
+export const Utility = {
+    GridCollisions
+}

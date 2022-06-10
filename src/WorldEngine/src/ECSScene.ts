@@ -96,13 +96,8 @@ export abstract class ECSScene extends Scene {
    * @param system 
    */
   public addSystem(priority: number, system: System): void {
-    // System must require at least one component    
-    if (system.componentsRequired.size == 0) {
-      console.error('System not added: empty Components list.' + system);
-      return;
-    }
-
     if(this.priorities.includes(priority)) {
+      alert('Fatal error. Check the console.');
       console.error(`${system} can not be used since priority ${priority} already in use.`);
       return;
     }

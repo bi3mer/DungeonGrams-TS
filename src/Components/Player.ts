@@ -1,7 +1,7 @@
 import { Component } from "../WorldEngine/";
 
 export class Player extends Component {
-  constructor() { 
+  constructor(public stamina: number) { 
     super(); 
   }
 }
