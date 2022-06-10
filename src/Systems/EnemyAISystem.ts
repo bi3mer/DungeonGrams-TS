@@ -1,12 +1,11 @@
-import { Collider } from "../Components/Collider";
-import { Render } from "../Components/Render";
 import { Engine, System, Entity, CommonComponents } from "../WorldEngine";
+import { C } from "../Components";
 
 const Position2d = CommonComponents.Position2d;
 
 
 export class EnemyAISystem extends System {
-  componentsRequired = new Set<Function>([Position2d, Render, Collider]);
+  componentsRequired = new Set<Function>([Position2d, C.Render, C.Collider]);
 
   update(engine: Engine, entities: Set<Entity>): void {
     // const playerPos = this.ecs.getComponents(playerID).get(Position);

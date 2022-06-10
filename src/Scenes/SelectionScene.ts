@@ -1,5 +1,5 @@
 import { LEVELS } from "../levels"; 
-import { MenuText } from "../Components/SelectionScene/MenuText";
+import { C } from "../Components";
 import { UpdateSelected } from "../Systems/SelectionScene/UpdateSelected";
 import { RenderMenuTextSystem } from "../Systems/SelectionScene/RenderMenuText";
 import { Engine, ECSScene, Key } from "../WorldEngine";
@@ -23,7 +23,7 @@ export class SelectionScene extends ECSScene {
     for(let i = 0; i < this.sortedLevels.length; ++i) {
       const id = this.addEntity();
       const selected = i == 0;
-      this.addComponent(id, new MenuText(this.sortedLevels[i], i, selected));
+      this.addComponent(id, new C.MenuText(this.sortedLevels[i], i, selected));
     }
 
     this.setBB('selected', 0);
@@ -39,7 +39,7 @@ export class SelectionScene extends ECSScene {
   public customUpdate(engine: Engine): number {
     if (engine.keyDown.has(Key.ENTER)) {
       const selected = this.getBB('selected');
-      engine.setBB('level', this.getComponents(selected).get(MenuText).name);
+      engine.setBB('level', this.getComponents(selected).get(C.MenuText).name);
       return this.sceneIndex;
     }
 

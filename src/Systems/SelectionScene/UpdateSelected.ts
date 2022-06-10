@@ -1,8 +1,8 @@
 import { Engine, System, Entity, Key } from "../../WorldEngine";
-import { MenuText } from "../../Components/SelectionScene/MenuText";
+import { C } from "../../Components";
 
 export class UpdateSelected extends System {
-  componentsRequired = new Set<Function>([MenuText]);
+  componentsRequired = new Set<Function>([C.MenuText]);
   lastUpdate = 10;
 
 
@@ -46,8 +46,8 @@ export class UpdateSelected extends System {
    
     // updated selected
     this.ecs.setBB('selected', newEntity);
-    this.ecs.getComponents(selectedEntity).get(MenuText).selected = false;
-    this.ecs.getComponents(newEntity).get(MenuText).selected = true;
+    this.ecs.getComponents(selectedEntity).get(C.MenuText).selected = false;
+    this.ecs.getComponents(newEntity).get(C.MenuText).selected = true;
     this.lastUpdate = 0;
   }
 }

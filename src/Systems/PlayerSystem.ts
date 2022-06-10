@@ -1,11 +1,10 @@
-import { Player } from "../Components/Player";
-import { Render } from "../Components/Render";
 import { Engine, System, Entity, Key, CommonComponents } from "../WorldEngine";
+import { C } from "../Components";
 const Position2d = CommonComponents.Position2d;
 
 
 export class PlayerSystem extends System {
-  componentsRequired = new Set<Function>([Position2d, Render, Player]);
+  componentsRequired = new Set<Function>([Position2d, C.Render, C.Player]);
   private timeSinceLastMove = 5;
 
   constructor() {

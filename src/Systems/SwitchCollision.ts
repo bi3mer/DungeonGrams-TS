@@ -1,9 +1,9 @@
-import { Switch } from "../Components/Switch";
 import { Engine, System, Entity, CommonComponents } from "../WorldEngine";
+import { C } from "../Components";
 const Position2d = CommonComponents.Position2d;
 
 export class SwitchCollision extends System {
-  componentsRequired = new Set<Function>([Switch]);
+  componentsRequired = new Set<Function>([C.Switch]);
 
   update(engine: Engine, entities: Set<Entity>): void {
     const playerID = this.ecs.getBB('player id');

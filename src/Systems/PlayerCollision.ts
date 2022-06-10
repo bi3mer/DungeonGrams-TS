@@ -1,10 +1,10 @@
-import { Collider } from "../Components/Collider";
 import { Engine, System, Entity, CommonComponents } from "../WorldEngine";
+import { C } from "../Components";
 
 const Position2d = CommonComponents.Position2d;
 
 export class PlayerCollision extends System {
-  componentsRequired = new Set<Function>([Collider]);
+  componentsRequired = new Set<Function>([C.Collider]);
 
   update(engine: Engine, entities: Set<Entity>): void {
     const playerID = this.ecs.getBB('player id');

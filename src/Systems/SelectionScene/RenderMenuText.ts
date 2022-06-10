@@ -1,8 +1,8 @@
 import { Engine, Entity, System } from "../../WorldEngine";
-import { MenuText } from "../../Components/SelectionScene/MenuText";
+import { C } from "../../Components";
 
 export class RenderMenuTextSystem extends System {
-  componentsRequired = new Set<Function>([MenuText]);
+  componentsRequired = new Set<Function>([C.MenuText]);
 
   update(engine: Engine, entities: Set<Entity>): void {
     const minY = 100;
@@ -12,7 +12,7 @@ export class RenderMenuTextSystem extends System {
 
     engine.ctx.font="15px Arial";
     for(let entity of entities.values()) {
-      const m = this.ecs.getComponents(entity).get(MenuText);
+      const m = this.ecs.getComponents(entity).get(C.MenuText);
       let x = 20;
       let o = m.order;
 
