@@ -1,7 +1,7 @@
-import { Position } from "../Components/Position";
 import { Switch } from "../Components/Switch";
+import { Engine, System, Entity, CommonComponents } from "../WorldEngine";
 
-import { Engine, System, Entity } from "../WorldEngine";
+const Position2d = CommonComponents.Position2d;
 
 export class FoodCollision extends System {
   componentsRequired = new Set<Function>([Switch]);

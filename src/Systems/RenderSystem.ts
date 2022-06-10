@@ -1,10 +1,10 @@
-import { Position } from "../Components/Position";
 import { Render } from "../Components/Render";
-import { Engine, System, Entity } from "../WorldEngine";
+import { Engine, System, Entity, CommonComponents } from "../WorldEngine";
+const Position2d = CommonComponents.Position2d;
 
 
 export class RenderSystem extends System {
-  componentsRequired = new Set<Function>([Position, Render]);
+  componentsRequired = new Set<Function>([Position2d, Render]);
   private charToColor: {[id: string]: string}= {
     '@': 'white',
     '-': '#d9d1d0',
@@ -28,7 +28,7 @@ export class RenderSystem extends System {
     for(let entity of entities.values()) {
       // get components
       const render = this.ecs.getComponents(entity).get(Render)
-      const pos = this.ecs.getComponents(entity).get(Position);
+      const pos = this.ecs.getComponents(entity).get(Position2d);
 
       // render
       engine.ctx.fillStyle = this.charToColor[render.character];

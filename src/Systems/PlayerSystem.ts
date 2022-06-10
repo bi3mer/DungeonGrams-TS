@@ -1,11 +1,11 @@
 import { Player } from "../Components/Player";
-import { Position } from "../Components/Position";
 import { Render } from "../Components/Render";
-import { Engine, System, Entity, Key } from "../WorldEngine";
+import { Engine, System, Entity, Key, CommonComponents } from "../WorldEngine";
+const Position2d = CommonComponents.Position2d;
 
 
 export class PlayerSystem extends System {
-  componentsRequired = new Set<Function>([Position, Render, Player]);
+  componentsRequired = new Set<Function>([Position2d, Render, Player]);
   private timeSinceLastMove = 5;
 
   constructor() {
@@ -21,7 +21,7 @@ export class PlayerSystem extends System {
     this.timeSinceLastMove = 0;
 
     let playerID = entities.values().next().value;
-    let pos = this.ecs.getComponents(playerID).get(Position);
+    let pos = this.ecs.getComponents(playerID).get(Position2d);
     const x = pos.x;
     const y = pos.y;
 

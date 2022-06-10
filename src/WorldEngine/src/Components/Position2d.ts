@@ -1,6 +1,6 @@
-import { Component } from "../WorldEngine";
+import { Component } from "../Component";
 
-export class Position extends Component {
+export class Position2d extends Component {
   public oldX: number;
   public oldY: number;
 
@@ -11,7 +11,7 @@ export class Position extends Component {
     this.oldY = y;
   }
 
-  public equals(other: Position): boolean {
+  public equals(other: Position2d): boolean {
     return this.x == other.x && this.y == other.y;
   }
 

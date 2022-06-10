@@ -1,4 +1,3 @@
-import { Position } from "../Components/Position";
 import { Render } from "../Components/Render";
 import { Player } from "../Components/Player";
 import { LEVELS } from "../levels";
@@ -15,7 +14,8 @@ import { EnemyCollision } from "../Systems/EnemyCollision";
 import { PlayerCollision } from "../Systems/PlayerCollision";
 import { Collider } from "../Components/Collider";
 
-import { Engine, ECSScene, Key } from "../WorldEngine";
+import { Engine, ECSScene, Key, CommonComponents } from "../WorldEngine";
+const Position2d = CommonComponents.Position2d;
 
 
 export class GameScene extends ECSScene {
@@ -61,7 +61,7 @@ export class GameScene extends ECSScene {
         }
         
         this.addComponent(id, new Render(char));
-        this.addComponent(id, new Position(xPos, yPos));
+        this.addComponent(id, new Position2d(xPos, yPos));
         
         if (char == 'O') {
           this.addComponent(id, new Portal());
@@ -90,7 +90,7 @@ export class GameScene extends ECSScene {
         if (x < xMin || x > xMax || y < yMin || y > yMax) {
             const id = this.addEntity();
             this.addComponent(id, new Render('X'));
-            this.addComponent(id, new Position(x, y));
+            this.addComponent(id, new Position2d(x, y));
 
             if (x == xMin - 1 || y == yMin - 1 || x == xMax + 1 || y == yMax + 1) {
               this.addComponent(id, new Collider());
