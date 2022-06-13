@@ -8,9 +8,9 @@ export class EnemyCollision extends System {
 
   update(engine: Engine, entities: Set<Entity>): void {
      // only run if the player just made a turn
-    if(this.ecs.getBB('player turn')) {
-      return;
-    }
+    if(this.ecs.getBB('player turn')) return;
+    this.ecs.setBB('player turn', true);
+
     
     // const playerID = this.ecs.blackBoard.get('player id');
     // const playerID = this.ecs.getBB('player id');

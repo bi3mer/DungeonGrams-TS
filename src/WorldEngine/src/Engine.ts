@@ -10,6 +10,8 @@ export class Engine {
   public readonly width: number;
   public readonly height: number;
   public delta: number;
+  public clearBackground = true;
+  public displayFPS = true;
   private blackBoard: Map<string, any> = new Map<string, any>();
 
   constructor() {
@@ -66,16 +68,20 @@ export class Engine {
       fps = Math.round(1 / this.delta);
 
       // reset background
-      this.ctx.fillStyle = 'black';
-      this.ctx.fillRect(0, 0, this.width, this.height);
+      if (this.clearBackground) {
+        this.ctx.fillStyle = 'black';
+        this.ctx.fillRect(0, 0, this.width, this.height);
+      }
 
       // game engine operations
       this.update();
 
       // Draw FPS
-      this.ctx.font = '12px Arial';
-      this.ctx.fillStyle = 'red';
-      this.ctx.fillText("FPS: " + fps, this.width-60, 30);
+      if (this.displayFPS && this.clearBackground) {
+        this.ctx.font = '12px Arial';
+        this.ctx.fillStyle = 'red';
+        this.ctx.fillText("FPS: " + fps, this.width-60, 30);
+      }
 
       window.requestAnimationFrame(gameLoop);
     }

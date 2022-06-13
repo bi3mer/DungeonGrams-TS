@@ -2,7 +2,6 @@ import { Engine, System, Entity, CommonComponents } from "../WorldEngine";
 import { C } from "../Components";
 const Position2d = CommonComponents.Position2d;
 
-
 export class RenderSystem extends System {
   componentsRequired = new Set<Function>([Position2d, C.Render]);
   private charToColor: {[id: string]: string}= {
@@ -19,8 +18,12 @@ export class RenderSystem extends System {
     '&': '#259c2b',
   };
 
-
   update(engine: Engine, entities: Set<Entity>): void {
+    // only render when there was a change to the player's position
+    if (!engine.clearBackground) {
+      return;
+    }
+
     const xMod: number = this.ecs.getBB('x mod');
     const yMod: number = this.ecs.getBB('y mod');
 

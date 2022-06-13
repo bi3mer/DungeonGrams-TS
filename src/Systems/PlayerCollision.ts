@@ -43,7 +43,7 @@ export class PlayerCollision extends System {
     // player ran into the portal.
     if (locComponents.has(C.Portal)) {
       if (this.ecs.getBB('switch count') == 0) {
-        this.ecs.setBB('game over', 1);
+      this.ecs.setBB('game over', 1);
       } else {
         pos.rejectChange();
       }
@@ -56,6 +56,7 @@ export class PlayerCollision extends System {
       components.get(C.Player).stamina += 25;
       this.ecs.removeEntity(locID);
       gc.acceptChange(pos, id);
+      this.ecs.setBB('change', true);
       return;
     }
 
