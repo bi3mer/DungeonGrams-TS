@@ -24,7 +24,6 @@ export class StartMenu extends Scene {
       engine.ctx.font = '20px Arial';
       engine.ctx.fillText('Press Enter to start', 275, 150);
 
-
       engine.ctx.fillStyle = 'yellow';
       engine.ctx.fillText('& gives you stamina', 40, 200);
       engine.ctx.fillText('Collect all * to open the portal.', 40, 222);
@@ -33,8 +32,9 @@ export class StartMenu extends Scene {
 
       engine.ctx.fillStyle = 'green';
       engine.ctx.fillText('WASD to move', 40, 350);
-      engine.ctx.fillText('R to restart', 40, 375);
-      engine.ctx.fillText('Q to quit', 40, 400);
+      engine.ctx.fillText('Space to do nothing for a turn', 40, 375);
+      engine.ctx.fillText('R to restart', 40, 400);
+      engine.ctx.fillText('Q to quit', 40, 425);
 
 
       return -1;

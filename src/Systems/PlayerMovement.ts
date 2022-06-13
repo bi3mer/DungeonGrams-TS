@@ -57,6 +57,11 @@ export class PlayerMovement extends System {
           pos.setY(y - 1);
           player.stamina -= 1;
           break;
+        case Key.SPACE:
+          player.stamina -= 1;
+          playerMoved = true;
+          this.updateTimeStep();
+          break;
         // nothing to do in the default case
       }
 
