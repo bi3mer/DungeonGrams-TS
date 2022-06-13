@@ -103,7 +103,6 @@ export class Game extends ECSScene {
     this.setBB('y mod', yMod); 
     this.setBB('grid collisions', gc);
     this.setBB('time step', 0);
-    this.setBB('change', true);
 
     this.addSystem(0,   new S.PlayerMovement());
     this.addSystem(10,  new S.PlayerCollision()); 

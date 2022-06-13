@@ -15,10 +15,17 @@ export class PlayerCollision extends System {
       return;
     }
 
+    // if the player is out of stamina, they've lost unless the player
+    // has hit a portal or food, which is handled below.
+    const player = components.get(C.Player);
+    if (player.stamina <= 0) {
+      this.ecs.setBB('game over', -1);
+    }
+
+    // if no collision was found, the player can move
     const gc: GridCollisions = this.ecs.getBB('grid collisions');
     const locID = gc.get(pos);
     
-    // if no collision was found, the player can move
     if (locID == undefined) {
       gc.acceptChange(pos, id);
       return;
@@ -43,7 +50,7 @@ export class PlayerCollision extends System {
     // player ran into the portal.
     if (locComponents.has(C.Portal)) {
       if (this.ecs.getBB('switch count') == 0) {
-      this.ecs.setBB('game over', 1);
+        this.ecs.setBB('game over', 1);
       } else {
         pos.rejectChange();
       }
@@ -53,11 +60,11 @@ export class PlayerCollision extends System {
 
     // player has ran into food
     if (locComponents.has(C.Food)) {
-      const player = components.get(C.Player);
       player.stamina += 30;
       this.ecs.removeEntity(locID);
       gc.acceptChange(pos, id);
-      this.ecs.setBB('change', true);
+      this.ecs.setBB('game over', 0);
+
       return;
     }
 

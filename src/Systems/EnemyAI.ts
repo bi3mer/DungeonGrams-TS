@@ -69,7 +69,6 @@ export class EnemyAI extends System {
 
 
   private getMoves(gc: GridCollisions, currentPos: Position2d, target: Position2d): Array<Position2d> {
-
     let moves = new Array<Position2d>();
     const diff_x = currentPos.getX() - target.getX();
     const diff_y = currentPos.getY() - target.getY();
@@ -89,10 +88,10 @@ export class EnemyAI extends System {
       if (diff_y > 0)      moves.push(new Position2d(0, -1));
       else if (diff_y < 0) moves.push(new Position2d(0, 1));
     } else if ((diff_x + diff_y) % 2 == 0) {
-      if (diff_x > 0)      moves.push(new Position2d(-1, 0));
-      else if (diff_x < 0) moves.push(new Position2d(1, 0));
       if (diff_y > 0)      moves.push(new Position2d(0, -1));
       else if (diff_y < 0) moves.push(new Position2d(0, 1));
+      if (diff_x > 0)      moves.push(new Position2d(-1, 0));
+      else if (diff_x < 0) moves.push(new Position2d(1, 0));
     } else {
       if (diff_x > 0)      moves.push(new Position2d(-1, 0));
       else if (diff_x < 0) moves.push(new Position2d(1, 0));
@@ -101,22 +100,5 @@ export class EnemyAI extends System {
     }
 
     return moves;
-
-    // NOTE: I like this implementation more but I'm reimplementing dungeongrams
-    // const validNewPositions = new Array<Position2d>();
-    // validNewPositions.push(currentPos);
-
-    // for(let m of this.getMoves(currentPos, target)) {
-    //   let newPos = currentPos.add(m);
-    //   const atPos = gc.get(newPos);
-
-    //   // the enemy can go to the new position if it is empty or the player is
-    //   // already there
-    //   if (atPos == undefined || this.ecs.getComponents(atPos).has(C.Player)) {
-    //     validNewPositions.push(newPos);
-    //   }
-    // }
-
-    // return validNewPositions;
   }
 }

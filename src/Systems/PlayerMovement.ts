@@ -67,9 +67,5 @@ export class PlayerMovement extends System {
 
       if(playerMoved) break;
     }
-
-    if (player.stamina <= 0) {
-      this.ecs.setBB('game over', -1);
-    }
   }
 }
