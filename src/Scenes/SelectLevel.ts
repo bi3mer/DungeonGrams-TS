@@ -24,7 +24,12 @@ export class SelectLevel extends ECSScene {
     for(let i = 0; i < this.sortedLevels.length; ++i) {
       const id = this.addEntity();
       const selected = i == 0;
-      this.addComponent(id, new C.MenuText(this.sortedLevels[i], i, selected));
+      this.addComponent(
+        id, 
+        new C.MenuText(this.sortedLevels[i], 
+        i, 
+        selected, 
+        engine.getCookie(this.sortedLevels[i]) != undefined));
     }
 
     this.setBB('selected', 0);

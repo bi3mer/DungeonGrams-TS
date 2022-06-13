@@ -69,9 +69,9 @@ export class Game extends ECSScene {
           switchCount += 1;
         } else if (char == '#') {
           this.addComponent(id, new C.Movable());
-          this.addComponent(id, new C.Enemy());
+          this.addComponent(id, new C.Enemy(new Position2d(xPos, yPos)));
         } else if (char == '^') {
-          this.addComponent(id, new C.Enemy());
+          this.addComponent(id, new C.Enemy(new Position2d(xPos, yPos)));
         } else if (char == '/' || char == '\\' || char == 'X') {
           this.addComponent(id, new Collider());
         } else if (char == '&') {
@@ -80,7 +80,6 @@ export class Game extends ECSScene {
       }
     }
 
-    console.log(yMin);
     for(let y = 3; y < engine.height/yMod -1; ++y) {
       for(let x = 1; x < engine.width/xMod -1; ++x) {
         if (x < xMin || x > xMax || y < yMin || y > yMax) {
@@ -103,16 +102,16 @@ export class Game extends ECSScene {
     this.setBB('x mod', xMod);
     this.setBB('y mod', yMod); 
     this.setBB('grid collisions', gc);
-    this.setBB('player turn', true);
+    this.setBB('time step', 0);
     this.setBB('change', true);
 
     this.addSystem(0,   new S.PlayerMovement());
     this.addSystem(10,  new S.PlayerCollision()); 
-    this.addSystem(20,  new S.EnemyAISystem());
-    this.addSystem(30,  new S.EnemyCollision());
+    this.addSystem(20,  new S.EnemyAI());
     this.addSystem(90,  new S.PortalSystem());   
     this.addSystem(100, new S.RenderSystem());
     this.addSystem(110, new S.RenderStamina());
+    this.addSystem(120, new S.RenderLevel());
     this.addSystem(900, new S.UpdatePlayerTurn());
   }
   

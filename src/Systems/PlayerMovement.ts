@@ -6,6 +6,11 @@ export class PlayerMovement extends System {
   componentsRequired = new Set<Function>([Position2d, C.Render, C.Player]);
   private timeSinceLastMove = 5;
 
+  private updateTimeStep(): void {
+    const timeStep: number = this.ecs.getBB('time step');
+    this.ecs.setBB('time step', timeStep + 1);
+  }
+
   update(engine: Engine, entities: Set<Entity>): void {
     this.timeSinceLastMove += engine.delta;
     if (this.timeSinceLastMove < 0.08) {
@@ -22,42 +27,44 @@ export class PlayerMovement extends System {
     const y = pos.getY();
 
     for(let key of engine.keyDown) {
+      let playerMoved = false;
       switch(key) {
         case Key.A:
         case Key.LEFT:
-          this.ecs.setBB('player turn', false);
+          this.updateTimeStep();
+          playerMoved = true;
           player.stamina -= 1;
           pos.setX(x - 1);
           break;
         case Key.S:
         case Key.DOWN:
-          this.ecs.setBB('player turn', false);
+          this.updateTimeStep();
+          playerMoved = true;
           pos.setY(y + 1);
           player.stamina -= 1;
           break;
         case Key.D:
         case Key.RIGHT:
-          this.ecs.setBB('player turn', false);
+          this.updateTimeStep();
+          playerMoved = true;
           pos.setX(x + 1);
           player.stamina -= 1;
           break;
         case Key.W:
         case Key.UP:
-          this.ecs.setBB('player turn', false);
+          this.updateTimeStep();
+          playerMoved = true;
           pos.setY(y - 1);
           player.stamina -= 1;
           break;
         // nothing to do in the default case
       }
 
-      if(!this.ecs.getBB('player turn')) {
-        break;
-      }
+      if(playerMoved) break;
     }
 
     if (player.stamina <= 0) {
       this.ecs.setBB('game over', -1);
     }
-
   }
 }

@@ -22,22 +22,25 @@ export class RenderMenuTextSystem extends System {
       }
 
       let y = minY + yMod * o;
-      
+      let fillColor: string;
       if(m.selected) {
-        const txtMeasure = engine.ctx.measureText(m.name);
-        engine.ctx.fillStyle = 'white'
-        engine.ctx.fillRect(
-          x-1.0, 
-          y - yMod*0.7,
-          txtMeasure.width*1.1, 
-          yMod);
-
-        engine.ctx.fillStyle = 'black'
-        engine.ctx.fillText(m.name, x, y);
-      } else {
-        engine.ctx.fillStyle = 'white'
-        engine.ctx.fillText(m.name, x, y);
+        fillColor = 'yellow'
+      } else if (m.beaten) {
+        fillColor = 'green'
+      }else {
+        fillColor = 'red';
       }
+
+      const txtMeasure = engine.ctx.measureText(m.name);
+      engine.ctx.fillStyle = fillColor;
+      engine.ctx.fillRect(
+        x-1.0, 
+        y - yMod*0.7,
+        txtMeasure.width*1.1, 
+        yMod);
+
+      engine.ctx.fillStyle = 'white'
+      engine.ctx.fillText(m.name, x, y);
     }
 
     engine.ctx.font="30px Arial";

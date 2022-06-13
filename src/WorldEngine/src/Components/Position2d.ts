@@ -32,8 +32,16 @@ export class Position2d extends Component {
 
   public set(x: number, y: number) {
     this.changed = true;
+    
     this.x = x;
     this.y = y;
+  }
+
+  public setPos(pos: Position2d) {
+    this.changed = true;
+    
+    this.x = pos.x;
+    this.y = pos.y;
   }
 
   public setX(x: number) {
@@ -64,5 +72,15 @@ export class Position2d extends Component {
     this.changed = false;
     this.x = this.oldX;
     this.y = this.oldY;
+  }
+
+  public euclideanDistance(pos: Position2d): number {
+    const x = Math.pow(this.x - pos.x, 2);
+    const y = Math.pow(this.y - pos.y, 2);
+    return Math.sqrt(x + y);
+  }
+
+  public add(pos: Position2d): Position2d {
+    return new Position2d(this.x + pos.x, this.y + pos.y);
   }
 }

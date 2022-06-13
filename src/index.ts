@@ -2,6 +2,8 @@ import { Engine } from "./WorldEngine";
 import { Scene } from "./Scenes";
 
 const engine = new Engine();
+engine.displayFPS = false;
+
 const startScene = new Scene.StartMenu();
 const selectionScene = new Scene.SelectLevel();
 const gameScene = new Scene.Game();
@@ -22,7 +24,7 @@ gameScene.playerWonIndex = wonIndex;
 gameScene.selfIndex = gameIndex;
 gameScene.mainMenuIndex = startIndex;
 
-playerLostScene.sceneIndex = startIndex;
+playerLostScene.sceneIndex = gameIndex;
 playerWonScene.sceneIndex = startIndex;
 
 engine.start();

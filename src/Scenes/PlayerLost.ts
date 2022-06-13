@@ -1,4 +1,4 @@
-import { Engine, Scene } from "../WorldEngine";
+import { Engine, Scene, Key } from "../WorldEngine";
 
 export class PlayerLost extends Scene {
   public sceneIndex: number = 0;
@@ -16,7 +16,7 @@ export class PlayerLost extends Scene {
 
   public update(engine: Engine): number {
     this.timer += engine.delta
-    if(this.timer > 2) {
+    if(this.timer > 2 || engine.keyDown.has(Key.ENTER)) {
       return this.sceneIndex;
     } else {
       engine.ctx.font = '40px Arial';
