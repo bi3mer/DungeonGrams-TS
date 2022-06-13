@@ -39,23 +39,27 @@ export class EnemyAI extends System {
         continue;
       }
 
-
       let closestVal = 1000;
-      let closestIndex = 0;
+      let closestIndex = -1;
 
       for (let i = 0; i < moves.length; ++i) {
         const pos = currentPos.add(moves[i]);
-        const val = pos.euclideanDistance(target);
-        if (val < closestVal) {
-          closestVal = val;
-          closestIndex = i;
+        const id = gc.get(pos);
+        if (id == undefined || this.ecs.getComponents(id!).has(C.Player)) {
+          const val = pos.euclideanDistance(target);
+          if (val < closestVal) {
+            closestVal = val;
+            closestIndex = i;
+          }
         }
       }
       
-      currentPos.setPos(currentPos.add(moves[closestIndex]));
-      gc.acceptChange(currentPos, id);
-      if (currentPos.equals(playerPos)) {
-        this.ecs.setBB('game over', -1);
+      if (closestIndex != -1) {
+        currentPos.setPos(currentPos.add(moves[closestIndex]));
+        gc.acceptChange(currentPos, id);
+        if (currentPos.equals(playerPos)) {
+          this.ecs.setBB('game over', -1);
+        }
       }
     }
 
