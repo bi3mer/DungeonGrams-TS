@@ -109,7 +109,7 @@ export class Game extends ECSScene {
     this.addSystem(20,  new S.EnemyAI());
     this.addSystem(90,  new S.PortalSystem());   
     this.addSystem(100, new S.RenderSystem());
-    this.addSystem(110, new S.RenderStamina());
+    this.addSystem(110, new S.RenderGameInfo());
     this.addSystem(120, new S.RenderLevel());
     this.addSystem(900, new S.UpdatePlayerTurn());
   }
