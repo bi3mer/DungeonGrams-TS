@@ -15,7 +15,9 @@ export class PlayerMovement extends System {
     this.timeSinceLastMove = 0;
 
     let playerID = entities.values().next().value;
-    let pos = this.ecs.getComponents(playerID).get(Position2d);
+    const components = this.ecs.getComponents(playerID);
+    const  player = components.get(C.Player);
+    let pos = components.get(Position2d);
     const x = pos.getX();
     const y = pos.getY();
 
@@ -24,25 +26,38 @@ export class PlayerMovement extends System {
         case Key.A:
         case Key.LEFT:
           this.ecs.setBB('player turn', false);
+          player.stamina -= 1;
           pos.setX(x - 1);
           break;
         case Key.S:
         case Key.DOWN:
           this.ecs.setBB('player turn', false);
           pos.setY(y + 1);
+          player.stamina -= 1;
           break;
         case Key.D:
         case Key.RIGHT:
           this.ecs.setBB('player turn', false);
           pos.setX(x + 1);
+          player.stamina -= 1;
           break;
         case Key.W:
         case Key.UP:
           this.ecs.setBB('player turn', false);
           pos.setY(y - 1);
+          player.stamina -= 1;
           break;
         // nothing to do in the default case
       }
+
+      if(!this.ecs.getBB('player turn')) {
+        break;
+      }
     }
+
+    if (player.stamina <= 0) {
+      this.ecs.setBB('game over', -1);
+    }
+
   }
 }

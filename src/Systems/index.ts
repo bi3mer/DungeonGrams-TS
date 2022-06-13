@@ -3,6 +3,7 @@ import { EnemyCollision } from "./EnemyCollision";
 import { PlayerCollision } from "./PlayerCollision";
 import { PlayerMovement } from "./PlayerMovement";
 import { PortalSystem } from "./PortalSystem";
+import { RenderStamina } from "./RenderStamina";
 import { RenderSystem } from "./RenderSystem";
 import { UpdatePlayerTurn } from "./UpdatePlayerTurn";
 
@@ -15,4 +16,5 @@ export const S = {
   PortalSystem,
   RenderSystem,
   UpdatePlayerTurn,
+  RenderStamina
 };

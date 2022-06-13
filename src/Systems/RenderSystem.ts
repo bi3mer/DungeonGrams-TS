@@ -19,11 +19,6 @@ export class RenderSystem extends System {
   };
 
   update(engine: Engine, entities: Set<Entity>): void {
-    // only render when there was a change to the player's position
-    if (!engine.clearBackground) {
-      return;
-    }
-
     const xMod: number = this.ecs.getBB('x mod');
     const yMod: number = this.ecs.getBB('y mod');
 

@@ -110,8 +110,9 @@ export class Game extends ECSScene {
     this.addSystem(10,  new S.PlayerCollision()); 
     this.addSystem(20,  new S.EnemyAISystem());
     this.addSystem(30,  new S.EnemyCollision());
-    this.addSystem(90,  new S.PortalSystem());   // only run if the player moved
-    this.addSystem(100, new S.RenderSystem());   // only run a change was made
+    this.addSystem(90,  new S.PortalSystem());   
+    this.addSystem(100, new S.RenderSystem());
+    this.addSystem(110, new S.RenderStamina());
     this.addSystem(900, new S.UpdatePlayerTurn());
   }
   
