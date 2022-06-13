@@ -61,7 +61,7 @@ export class Game extends ECSScene {
           this.addComponent(id, new C.Portal());
           this.setBB('portal id', id);
         } else if (char == '@') {
-          this.addComponent(id, new C.Player(35));
+          this.addComponent(id, new C.Player(30));
           this.addComponent(id, new C.Movable());
           this.setBB('player id', id);
         } else if (char == '*') {
