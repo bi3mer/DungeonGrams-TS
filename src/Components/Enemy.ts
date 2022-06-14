@@ -1,8 +1,7 @@
-import { Component } from "../WorldEngine/";
-import { Position2d } from "../WorldEngine/src/Components/Position2d";
+import { Component, CommonComponents } from "../WorldEngine/";
 
 export class Enemy extends Component {
-  constructor(public startPosition: Position2d) { 
+  constructor(public startPosition: CommonComponents.Position2d) { 
     super(); 
   }
 }

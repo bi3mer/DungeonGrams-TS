@@ -1,7 +1,5 @@
-import { Engine, System, Entity, CommonComponents } from "../WorldEngine";
+import { Engine, System, Entity } from "../WorldEngine";
 import { C } from "../Components";
-
-const Position2d = CommonComponents.Position2d;
 
 export class PortalSystem extends System {
   componentsRequired = new Set<Function>([C.Portal, C.Render]);

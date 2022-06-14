@@ -8,12 +8,5 @@ export { Scene } from "./src/Scene";
 export { ECSScene } from "./src/ECSScene";
 export { Key } from "./src/Key";
 
-import { Position2d } from "./src/Components/Position2d";
-export const CommonComponents = {
-    Position2d
-};
-
-import { GridCollisions } from "./src/Utility/GridCollisions";
-export const Utility = {
-    GridCollisions
-}
+export * as CommonComponents from "./src/Components";
+export * as Utility from "./src/Utility";

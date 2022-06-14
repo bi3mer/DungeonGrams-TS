@@ -1,9 +1,8 @@
 import { Engine, System, Entity, Key, CommonComponents } from "../WorldEngine";
 import { C } from "../Components";
-const Position2d = CommonComponents.Position2d;
 
 export class PlayerMovement extends System {
-  componentsRequired = new Set<Function>([Position2d, C.Render, C.Player]);
+  componentsRequired = new Set<Function>([CommonComponents.Position2d, C.Render, C.Player]);
   private timeSinceLastMove = 5;
 
   private updateTimeStep(): void {
@@ -22,7 +21,7 @@ export class PlayerMovement extends System {
     let playerID = entities.values().next().value;
     const components = this.ecs.getComponents(playerID);
     const  player = components.get(C.Player);
-    let pos = components.get(Position2d);
+    let pos = components.get(CommonComponents.Position2d);
     const x = pos.getX();
     const y = pos.getY();
 

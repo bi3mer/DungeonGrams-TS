@@ -1,11 +1,9 @@
-import { GridCollisions } from "../WorldEngine/src/Utility/GridCollisions";
-import { Position2d } from "../WorldEngine/src/Components/Position2d";
-import { Engine, System, Entity } from "../WorldEngine";
+import { Engine, System, Entity, Utility, CommonComponents } from "../WorldEngine";
 import { C } from "../Components";
 import { Enemy } from "../Components/Enemy";
 
 export class EnemyAI extends System {
-  componentsRequired = new Set<Function>([Position2d, C.Enemy, C.Movable]);
+  componentsRequired = new Set<Function>([CommonComponents.Position2d, C.Enemy, C.Movable]);
   constructor() {
     super();
     
@@ -17,14 +15,14 @@ export class EnemyAI extends System {
     
     // get the player position and grid collision tool
     const playerID = this.ecs.getBB('player id');
-    const playerPos = this.ecs.getComponents(playerID).get(Position2d);
-    const gc: GridCollisions = this.ecs.getBB('grid collisions');
+    const playerPos = this.ecs.getComponents(playerID).get(CommonComponents.Position2d);
+    const gc: Utility.GridCollisions = this.ecs.getBB('grid collisions');
 
     for (let id of entities) {
       const components = this.ecs.getComponents(id);
-      const currentPos = components.get(Position2d);
+      const currentPos = components.get(CommonComponents.Position2d);
       const startPos = components.get(Enemy).startPosition;
-      let target: Position2d;
+      let target: CommonComponents.Position2d;
 
       if (currentPos.euclideanDistance(playerPos) <= 3 && 
           currentPos.euclideanDistance(startPos) <= 3) {
@@ -68,8 +66,12 @@ export class EnemyAI extends System {
   }
 
 
-  private getMoves(gc: GridCollisions, currentPos: Position2d, target: Position2d): Array<Position2d> {
-    let moves = new Array<Position2d>();
+  private getMoves(
+    gc: Utility.GridCollisions, 
+    currentPos: CommonComponents.Position2d, 
+    target: CommonComponents.Position2d): Array<CommonComponents.Position2d> {
+
+    let moves = new Array<CommonComponents.Position2d>();
     const diff_x = currentPos.getX() - target.getX();
     const diff_y = currentPos.getY() - target.getY();
 
@@ -78,25 +80,25 @@ export class EnemyAI extends System {
     }
 
     if (Math.abs(diff_y) > Math.abs(diff_x)) {
-      if (diff_y > 0)      moves.push(new Position2d(0, -1));
-      else if (diff_y < 0) moves.push(new Position2d(0, 1));
-      if (diff_x > 0)      moves.push(new Position2d(-1, 0));
-      else if (diff_x < 0) moves.push(new Position2d(1, 0));
+      if (diff_y > 0)      moves.push(new CommonComponents.Position2d(0, -1));
+      else if (diff_y < 0) moves.push(new CommonComponents.Position2d(0, 1));
+      if (diff_x > 0)      moves.push(new CommonComponents.Position2d(-1, 0));
+      else if (diff_x < 0) moves.push(new CommonComponents.Position2d(1, 0));
     } else if (Math.abs(diff_x) > Math.abs(diff_y)) {
-      if (diff_x > 0)      moves.push(new Position2d(-1, 0));
-      else if (diff_x < 0) moves.push(new Position2d(1, 0));
-      if (diff_y > 0)      moves.push(new Position2d(0, -1));
-      else if (diff_y < 0) moves.push(new Position2d(0, 1));
+      if (diff_x > 0)      moves.push(new CommonComponents.Position2d(-1, 0));
+      else if (diff_x < 0) moves.push(new CommonComponents.Position2d(1, 0));
+      if (diff_y > 0)      moves.push(new CommonComponents.Position2d(0, -1));
+      else if (diff_y < 0) moves.push(new CommonComponents.Position2d(0, 1));
     } else if ((diff_x + diff_y) % 2 == 0) {
-      if (diff_y > 0)      moves.push(new Position2d(0, -1));
-      else if (diff_y < 0) moves.push(new Position2d(0, 1));
-      if (diff_x > 0)      moves.push(new Position2d(-1, 0));
-      else if (diff_x < 0) moves.push(new Position2d(1, 0));
+      if (diff_y > 0)      moves.push(new CommonComponents.Position2d(0, -1));
+      else if (diff_y < 0) moves.push(new CommonComponents.Position2d(0, 1));
+      if (diff_x > 0)      moves.push(new CommonComponents.Position2d(-1, 0));
+      else if (diff_x < 0) moves.push(new CommonComponents.Position2d(1, 0));
     } else {
-      if (diff_x > 0)      moves.push(new Position2d(-1, 0));
-      else if (diff_x < 0) moves.push(new Position2d(1, 0));
-      if (diff_y > 0)      moves.push(new Position2d(0, -1));
-      else if (diff_y < 0) moves.push(new Position2d(0, 1));
+      if (diff_x > 0)      moves.push(new CommonComponents.Position2d(-1, 0));
+      else if (diff_x < 0) moves.push(new CommonComponents.Position2d(1, 0));
+      if (diff_y > 0)      moves.push(new CommonComponents.Position2d(0, -1));
+      else if (diff_y < 0) moves.push(new CommonComponents.Position2d(0, 1));
     }
 
     return moves;

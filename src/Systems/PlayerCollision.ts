@@ -1,8 +1,6 @@
-import { Engine, System, Entity, CommonComponents } from "../WorldEngine";
-import { GridCollisions } from "../WorldEngine/src/Utility/GridCollisions";
+import { Engine, System, Entity, CommonComponents, Utility } from "../WorldEngine";
 import { C } from "../Components";
 
-const Position2d = CommonComponents.Position2d;
 
 export class PlayerCollision extends System {
   componentsRequired = new Set<Function>([]);
@@ -10,7 +8,7 @@ export class PlayerCollision extends System {
   update(engine: Engine, entities: Set<Entity>): void {
     const id = this.ecs.getBB('player id');
     const components = this.ecs.getComponents(id);
-    const pos = components.get(Position2d);
+    const pos = components.get(CommonComponents.Position2d);
     if (!pos.updated()) {
       return;
     }
@@ -23,7 +21,7 @@ export class PlayerCollision extends System {
     }
 
     // if no collision was found, the player can move
-    const gc: GridCollisions = this.ecs.getBB('grid collisions');
+    const gc: Utility.GridCollisions = this.ecs.getBB('grid collisions');
     const locID = gc.get(pos);
     
     if (locID == undefined) {

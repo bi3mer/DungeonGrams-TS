@@ -5,8 +5,6 @@ import { LEVELS } from "../levels";
 
 import { Engine, ECSScene, Key, CommonComponents, Utility } from "../WorldEngine";
 import { Collider } from "../Components/Collider";
-const Position2d = CommonComponents.Position2d;
-const GridCollisions = Utility.GridCollisions;
 
 export class Game extends ECSScene {
   public playerWonIndex = 0;
@@ -30,7 +28,7 @@ export class Game extends ECSScene {
     let yMin = 1000;
     let yMax = 0;
 
-    const gc = new GridCollisions();
+    const gc = new Utility.GridCollisions();
 
     let switchCount = 0;
     const lvlKey = engine.getBB('level') as string;
@@ -53,7 +51,7 @@ export class Game extends ECSScene {
         }
         
         this.addComponent(id, new C.Render(char));
-        const pos = new Position2d(xPos, yPos);
+        const pos = new CommonComponents.Position2d(xPos, yPos);
         this.addComponent(id, pos);
         gc.set(pos, id);
         
@@ -69,9 +67,9 @@ export class Game extends ECSScene {
           switchCount += 1;
         } else if (char == '#') {
           this.addComponent(id, new C.Movable());
-          this.addComponent(id, new C.Enemy(new Position2d(xPos, yPos)));
+          this.addComponent(id, new C.Enemy(new CommonComponents.Position2d(xPos, yPos)));
         } else if (char == '^') {
-          this.addComponent(id, new C.Enemy(new Position2d(xPos, yPos)));
+          this.addComponent(id, new C.Enemy(new CommonComponents.Position2d(xPos, yPos)));
         } else if (char == '/' || char == '\\' || char == 'X') {
           this.addComponent(id, new Collider());
         } else if (char == '&') {
@@ -85,7 +83,7 @@ export class Game extends ECSScene {
         if (x < xMin || x > xMax || y < yMin || y > yMax) {
           const id = this.addEntity();
           this.addComponent(id, new C.Render('X'));
-          const pos = new Position2d(x, y);
+          const pos = new CommonComponents.Position2d(x, y);
           this.addComponent(id, pos);
 
           if (x == xMin - 1 || y == yMin - 1 || x == xMax + 1 || y == yMax + 1) {
