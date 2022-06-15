@@ -1,4 +1,4 @@
-import { Engine, ECSScene, Key } from "../WorldEngine";
+import { Engine, ECSScene, Key, Utility } from "../WorldEngine";
 
 import { RenderMenuTextSystem } from "../Systems/SelectionScene/RenderMenuText";
 import { UpdateSelected } from "../Systems/SelectionScene/UpdateSelected";
@@ -21,6 +21,7 @@ export class SelectLevel extends ECSScene {
   }
   
   public onEnter(engine: Engine): void { 
+    engine.setFont(20);
     for(let i = 0; i < this.sortedLevels.length; ++i) {
       const id = this.addEntity();
       const selected = i == 0;
@@ -29,7 +30,7 @@ export class SelectLevel extends ECSScene {
         new C.MenuText(this.sortedLevels[i], 
         i, 
         selected, 
-        engine.getCookie(this.sortedLevels[i]) != undefined));
+        Utility.Cookie.get(this.sortedLevels[i]) != undefined));
     }
 
     this.setBB('selected', 0);

@@ -17,24 +17,21 @@ export class StartMenu extends Scene {
       engine.keyDown.clear();
       return this.sceneIndex;
     } else {
-      engine.ctx.font = '40px Arial';
-      engine.ctx.fillStyle = 'white';
-      engine.ctx.fillText('DungeonGrams', 220, 100);
+      engine.setFont(40);
+      engine.drawText(220, 100, 'DungeonGrams')
 
-      engine.ctx.font = '20px Arial';
-      engine.ctx.fillText('Press Enter to start', 275, 150);
+      engine.setFont(20);
+      engine.drawText(245, 150, 'Press Enter to Start')
 
-      engine.ctx.fillStyle = 'yellow';
-      engine.ctx.fillText('& gives you stamina', 40, 200);
-      engine.ctx.fillText('Collect all * to open the portal.', 40, 222);
-      engine.ctx.fillText('Step through the portal O to win!', 40, 244);
-      engine.ctx.fillText('But make sure to avoid the enemies # and traps ^', 40, 266);
+      engine.drawText(40, 200,'& gives you stamina', 'yellow');
+      engine.drawText(40, 222, 'Collect all * to open the portal.', 'yellow');
+      engine.drawText(40, 244, 'Step through the portal O to win!', 'yellow');
+      engine.drawText( 40, 266, 'But make sure to avoid the enemies # and traps ^', 'yellow');
 
-      engine.ctx.fillStyle = 'green';
-      engine.ctx.fillText('WASD to move', 40, 350);
-      engine.ctx.fillText('Space to do nothing for a turn', 40, 375);
-      engine.ctx.fillText('R to restart', 40, 400);
-      engine.ctx.fillText('Q to quit', 40, 425);
+      engine.drawText(40, 350, 'WASD to move', 'green');
+      engine.drawText(40, 375, 'Space to do nothing for a turn', 'green');
+      engine.drawText(40, 400, 'R to restart', 'green');
+      engine.drawText(40, 425, 'Q to quit', 'green');
 
 
       return -1;

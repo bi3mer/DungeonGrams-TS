@@ -19,9 +19,8 @@ export class PlayerLost extends Scene {
     if(this.timer > 2 || engine.keyDown.has(Key.ENTER)) {
       return this.sceneIndex;
     } else {
-      engine.ctx.font = '40px Arial';
-      engine.ctx.fillStyle = 'green'
-      engine.ctx.fillText('You Lost! :/', engine.width/3.5, engine.height/2);
+      engine.setFont(40);
+      engine.drawText(200, 240, 'You lost! :/', 'red')
       return -1;
     }
   }

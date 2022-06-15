@@ -21,18 +21,15 @@ export class RenderSystem extends System {
     const xMod: number = this.ecs.getBB('x mod');
     const yMod: number = this.ecs.getBB('y mod');
 
-    engine.ctx.font = '20px Arial';
     for(let entity of entities.values()) {
       // get components
       const render = this.ecs.getComponents(entity).get(C.Render)
       const pos = this.ecs.getComponents(entity).get(CommonComponents.Position2d);
 
       // render
-      engine.ctx.fillStyle = this.charToColor[render.character];
-      engine.ctx.fillText(
-        render.character, 
-        pos.getX()*xMod, 
-        pos.getY()*yMod);
+      const char = render.character;
+      const color = this.charToColor[char];
+      engine.drawText(pos.getX()*xMod, pos.getY()*yMod, char, color);
     }
   }
 }

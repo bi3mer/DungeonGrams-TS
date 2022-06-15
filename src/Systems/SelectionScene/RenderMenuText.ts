@@ -10,7 +10,6 @@ export class RenderMenuTextSystem extends System {
     const yMod = 20;
     const maxOrder = (maxY - minY) / yMod;
 
-    engine.ctx.font="15px Arial";
     for(let entity of entities.values()) {
       const m = this.ecs.getComponents(entity).get(C.MenuText);
       let x = 20;
@@ -24,27 +23,16 @@ export class RenderMenuTextSystem extends System {
       let y = minY + yMod * o;
       let fillColor: string;
       if(m.selected) {
-        fillColor = 'yellow'
+        fillColor = 'blue'
       } else if (m.beaten) {
         fillColor = 'green'
       }else {
         fillColor = 'red';
       }
 
-      const txtMeasure = engine.ctx.measureText(m.name);
-      engine.ctx.fillStyle = fillColor;
-      engine.ctx.fillRect(
-        x-1.0, 
-        y - yMod*0.7,
-        txtMeasure.width*1.1, 
-        yMod);
-
-      engine.ctx.fillStyle = 'white'
-      engine.ctx.fillText(m.name, x, y);
+      engine.drawText(x, y, m.name, 'white', true, fillColor);
     }
 
-    engine.ctx.font="30px Arial";
-    engine.ctx.fillStyle = 'white'
-    engine.ctx.fillText('Level Select', engine.width/2.5, 45);
+    engine.drawText(engine.width/2.5, 45, 'Level Select', 'white')
   }
 }

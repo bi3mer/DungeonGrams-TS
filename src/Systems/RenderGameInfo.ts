@@ -9,24 +9,20 @@ export class RenderGameInfo extends System {
     const stamina = this.ecs.getComponents(id).get(C.Player).stamina;
 
     // stamina
+    let color: string;
     if (stamina > 20) {
-      engine.ctx.fillStyle = 'green';
+      color = 'green';
     } else if (stamina > 10) {
-      engine.ctx.fillStyle = 'yellow';
+      color = 'yellow';
     } else {
-      engine.ctx.fillStyle = 'red';
+      color= 'red';
     }
 
-    engine.ctx.font = '20px Arial';
-    engine.ctx.fillText(
-      `Stamina: ${stamina}`, 
-      20, 
-      30);
+    engine.drawText(20, 30, `Stamina: ${stamina}`, color);
 
     // turn index
-    engine.ctx.fillStyle = 'white';
     const time = this.ecs.getBB('time step');
-    let x = time < 10 ? 630 : 620;
-    engine.ctx.fillText(`Turn: ${time}`, x, 30);
+    let x = time < 10 ? 610 : 595;
+    engine.drawText(x, 30, `Turn: ${time}`);
   }
 }

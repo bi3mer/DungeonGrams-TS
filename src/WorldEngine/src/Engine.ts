@@ -2,9 +2,6 @@ import { Key, keyCodeToKey } from "./Key";
 import { Scene } from "./Scene";
 
 export class Engine {
-  private scenes = new Array<Scene>();
-  private sceneIndex: number = 0;
-  public readonly ctx: CanvasRenderingContext2D;;
   public readonly keyDown = new Set<Key>();
   public readonly keyPress = new Set<Key>();
   public readonly width: number;
@@ -12,7 +9,13 @@ export class Engine {
   public delta: number;
   public clearBackground = true;
   public displayFPS = true;
+  
+  private scenes = new Array<Scene>();
+  private sceneIndex: number = 0;
+  private ctx: CanvasRenderingContext2D;
   private blackBoard: Map<string, any> = new Map<string, any>();
+  private fontSize = 20;
+  private font = 'Courier New'
 
   constructor() {
     window.addEventListener('keydown', (e: KeyboardEvent) => {
@@ -23,6 +26,8 @@ export class Engine {
       if(!this.keyDown.has(k)) {
         this.keyDown.add(k)
       }
+
+      this.setFont();
     });
 
     window.addEventListener('keyup', (e: KeyboardEvent) => {
@@ -78,9 +83,12 @@ export class Engine {
 
       // Draw FPS
       if (this.displayFPS && this.clearBackground) {
-        this.ctx.font = '12px Arial';
-        this.ctx.fillStyle = 'red';
-        this.ctx.fillText("FPS: " + fps, this.width-60, 30);
+        const tempSize = this.fontSize;
+        const tempFont = this.font;
+
+        this.setFont(8, 'Courier New');
+        this.drawText(this.width - 60, 15, `FPS: ${fps}`, 'red');
+        this.setFont(tempSize, tempFont);
       }
 
       window.requestAnimationFrame(gameLoop);
@@ -100,21 +108,38 @@ export class Engine {
     this.keyPress.clear();
   }
 
-  public setCookie(name: string, val: string) {
-    const date = new Date();
-    date.setTime(date.getTime() + (31 * 24 * 60 * 60 * 1000));
-    document.cookie = name+"="+val+"; expires="+date.toUTCString()+"; path=/";
-    console.log('set cookie!!!!!');
-  }
-
-  public getCookie(name: string): string | undefined {
-    const value = "; " + document.cookie;
-    const parts = value.split("; " + name + "=");
-
-    if (parts != undefined && parts.length == 2) {
-      return parts.pop()!.split(";").shift();
+  public setFont(size: number|undefined = undefined, font: string|undefined = undefined) {
+    if (size != undefined) {
+      this.fontSize = size;
     }
 
-    return undefined;
+    if (font != undefined) {
+      this.font = font;
+    }
+
+    this.ctx.font = `${this.fontSize}px ${this.font}`;
+  }
+
+  public drawText(
+    x: number, 
+    y: number, 
+    char: string, 
+    fontColor='white',
+    background=false,
+    backgroundColor="white"): void {
+    // background
+    if (background) {
+      const txtMeasure = this.ctx.measureText(char);
+      this.ctx.fillStyle = backgroundColor;
+      this.ctx.fillRect(
+        x-1.0, 
+        y - this.fontSize*0.7,
+        txtMeasure.width*1.1, 
+        this.fontSize*1.2);
+    }
+
+    // text
+    this.ctx.fillStyle = fontColor;
+    this.ctx.fillText(char, x, y);
   }
 }
