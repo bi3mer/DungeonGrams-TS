@@ -3,7 +3,6 @@ import { C } from "../Components";
 
 export class PlayerMovement extends System {
   componentsRequired = new Set<Function>([CommonComponents.Position2d, C.Render, C.Player]);
-  private timeSinceLastMove = 5;
 
   private updateTimeStep(): void {
     const timeStep: number = this.ecs.getBB('time step');
@@ -11,13 +10,6 @@ export class PlayerMovement extends System {
   }
 
   update(engine: Engine, entities: Set<Entity>): void {
-    this.timeSinceLastMove += engine.delta;
-    if (this.timeSinceLastMove < 0.08) {
-      return;
-    }
-
-    this.timeSinceLastMove = 0;
-
     let playerID = entities.values().next().value;
     const components = this.ecs.getComponents(playerID);
     const  player = components.get(C.Player);
@@ -25,7 +17,7 @@ export class PlayerMovement extends System {
     const x = pos.getX();
     const y = pos.getY();
 
-    for(let key of engine.keyDown) {
+    for(let key of engine.keyPress) {
       let playerMoved = false;
       switch(key) {
         case Key.A:

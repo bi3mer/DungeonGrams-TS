@@ -9,7 +9,7 @@ export class Engine {
   public delta: number;
   public clearBackground = true;
   public displayFPS = true;
-  
+
   private scenes = new Array<Scene>();
   private sceneIndex: number = 0;
   private ctx: CanvasRenderingContext2D;
@@ -33,11 +33,10 @@ export class Engine {
     window.addEventListener('keyup', (e: KeyboardEvent) => {
       const k = keyCodeToKey(e.key);
       this.keyDown.delete(k);
+
+      this.keyPress.add(k);
     });
 
-    window.addEventListener('keypress', (e: KeyboardEvent) => {
-      this.keyPress.add(keyCodeToKey(e.key))
-    });
 
     const canvas = document.getElementById('canvas') as HTMLCanvasElement;
     this.ctx = canvas.getContext("2d")!;
@@ -91,6 +90,7 @@ export class Engine {
         this.setFont(tempSize, tempFont);
       }
 
+      this.keyPress.clear();
       window.requestAnimationFrame(gameLoop);
     }
 
@@ -104,8 +104,6 @@ export class Engine {
       this.sceneIndex = i
       this.scenes[this.sceneIndex].onEnter(this);
     }
-
-    this.keyPress.clear();
   }
 
   public setFont(size: number|undefined = undefined, font: string|undefined = undefined) {
