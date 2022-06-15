@@ -23,23 +23,23 @@ export class Engine {
       if(k == Key.DOWN || k == Key.UP || k == Key.LEFT || k == Key.RIGHT) {
         e.preventDefault();
       }
+      
       if(!this.keyDown.has(k)) {
         this.keyDown.add(k)
       }
 
-      this.setFont();
+      this.keyPress.add(k);
     });
 
     window.addEventListener('keyup', (e: KeyboardEvent) => {
       const k = keyCodeToKey(e.key);
       this.keyDown.delete(k);
-
-      this.keyPress.add(k);
     });
 
 
     const canvas = document.getElementById('canvas') as HTMLCanvasElement;
     this.ctx = canvas.getContext("2d")!;
+    this.setFont();
 
     this.width = canvas.width;
     this.height = canvas.height;
