@@ -6,6 +6,9 @@ module.exports = {
   output: {
   filename: "bundle.js"
   },
+  optimization: {
+    chunkIds: false,
+  },
   resolve: {
   // Add `.ts` and `.tsx` as a resolvable extension.
   extensions: [".ts", ".tsx", ".js"]

@@ -28,7 +28,7 @@ export class StartMenu extends Scene {
       engine.drawText(40, 244, 'Step through the portal O to win!', 'yellow');
       engine.drawText( 40, 266, 'But make sure to avoid the enemies # and traps ^', 'yellow');
 
-      engine.drawText(40, 350, 'WASD to move', 'green');
+      engine.drawText(40, 350, 'WASD or Arrows to move', 'green');
       engine.drawText(40, 375, 'Space to do nothing for a turn', 'green');
       engine.drawText(40, 400, 'R to restart', 'green');
       engine.drawText(40, 425, 'Q to quit', 'green');

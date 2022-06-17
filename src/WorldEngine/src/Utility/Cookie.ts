@@ -2,7 +2,6 @@ export function set(name: string, val: string) {
   const date = new Date();
   date.setTime(date.getTime() + (31 * 24 * 60 * 60 * 1000));
   document.cookie = name+"="+val+"; expires="+date.toUTCString()+"; path=/";
-  console.log('set cookie!!!!!');
 }
 
 export function get(name: string): string | undefined {
