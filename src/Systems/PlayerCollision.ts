@@ -58,7 +58,7 @@ export class PlayerCollision extends System {
 
     // player has ran into food
     if (locComponents.has(C.Food)) {
-      player.stamina += 30;
+      player.stamina = Math.min(player.stamina + 25, 30);
       this.ecs.removeEntity(locID);
       gc.acceptChange(pos, id);
       this.ecs.setBB('game over', 0);
