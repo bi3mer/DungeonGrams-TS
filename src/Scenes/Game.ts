@@ -1,6 +1,6 @@
 import { C } from "../Components";
 import { S } from "../Systems";
-import { LEVELS } from "../levels";
+import { LINKS, LEVELS } from "../LinkLevelGraph";
 
 
 import { Engine, ECSScene, Key, CommonComponents, Utility } from "../WorldEngine";
