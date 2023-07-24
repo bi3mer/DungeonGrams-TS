@@ -6,6 +6,6 @@ export class RenderLevel extends System {
   update(engine: Engine, entities: Set<Entity>): void {
     const level: string = engine.getBB('level');
     engine.setFont(20);
-    engine.drawText(300, 30, `Level: ${level}`, 'white');
+    engine.drawText(20, 465, `Level: ${level}`, 'white');
   }
 }

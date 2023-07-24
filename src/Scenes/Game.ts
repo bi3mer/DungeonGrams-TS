@@ -1,6 +1,6 @@
 import { C } from "../Components";
 import { S } from "../Systems";
-import { LINKS, LEVELS } from "../LinkLevelGraph";
+import { LEVELS } from "../levels";
 
 
 import { Engine, ECSScene, Key, CommonComponents, Utility } from "../WorldEngine";
@@ -59,7 +59,7 @@ export class Game extends ECSScene {
           this.addComponent(id, new C.Portal());
           this.setBB('portal id', id);
         } else if (char == '@') {
-          this.addComponent(id, new C.Player(30));
+          this.addComponent(id, new C.Player(40));
           this.addComponent(id, new C.Movable());
           this.setBB('player id', id);
         } else if (char == '*') {

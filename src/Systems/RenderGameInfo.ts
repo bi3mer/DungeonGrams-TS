@@ -20,9 +20,9 @@ export class RenderGameInfo extends System {
 
     engine.drawRect(20, 20, stamina*8, 20, color);
 
-    const maxStamina = 30*8;
+    const maxStamina = 40*8;
     engine.drawRectOutline(19, 18, maxStamina + 2, 22, 2, 'gray');
-    engine.drawText(30*4, 35, `${stamina}`, 'white')
+    engine.drawText(40*4, 35, `${stamina}`, 'white')
 
     // turn index
     const time = this.ecs.getBB('time step');
